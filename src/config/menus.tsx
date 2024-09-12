@@ -19,141 +19,141 @@ export interface MenuItem {
 export const menus: MenuItem[] = [
   {
     label: '实时监控',
-    key: '/home/monitor',
+    key: '/monitor',
     icon: <Monitor />,
     children: [
       {
         label: '数据大盘',
-        key: '/home/monitor/dashboar',
+        key: '/monitor/dashboard',
       },
       {
         label: '实时告警',
-        key: '/home/monitor/realtime',
+        key: '/monitor/alarm',
       },
     ],
   },
   {
     label: '数据源',
-    key: '/home/datasource',
+    key: '/datasource',
     icon: <DatabaseZap />,
     children: [
       {
         label: 'Metric',
-        key: '/home/datasource/metric',
+        key: '/datasource/metric',
       },
       {
         label: 'Log',
-        key: '/home/datasource/log',
+        key: '/datasource/log',
       },
       {
         label: 'Trace',
-        key: '/home/datasource/trace',
+        key: '/datasource/trace',
       },
     ],
   },
   {
     label: '策略管理',
-    key: '/home/strategy',
+    key: '/strategy',
     icon: <BookText />,
     children: [
       {
         label: '策略组',
-        key: '/home/strategy/group',
+        key: '/strategy/group',
       },
       {
         label: '策略列表',
-        key: '/home/strategy/list',
+        key: '/strategy/list',
       },
     ],
   },
   {
     label: '告警通知',
-    key: '/home/notify',
+    key: '/notify',
     icon: <Bell />,
     children: [
       {
         label: '告警组',
-        key: '/home/notify/group',
+        key: '/notify/group',
       },
       {
         label: 'Hook',
-        key: '/home/notify/hook',
+        key: '/notify/hook',
       },
       {
         label: '通知规则',
-        key: '/home/notify/rule',
+        key: '/notify/rule',
       },
       {
         label: '告警记录',
-        key: '/home/notify/record',
+        key: '/notify/record',
       },
     ],
   },
   {
     label: '告警归档',
-    key: '/home/archive',
+    key: '/archive',
     icon: <FolderArchive />,
     children: [
       {
         label: '历史告警',
-        key: '/home/archive/history',
+        key: '/archive/history',
       },
       {
         label: '告警统计',
-        key: '/home/archive/statistics',
+        key: '/archive/statistics',
       },
       {
         label: '历史通知',
-        key: '/home/archive/notice',
+        key: '/archive/notice',
       },
     ],
   },
   {
     label: '个人中心',
-    key: '/home/self',
+    key: '/self',
     icon: <UserRoundCog />,
     children: [
       {
         label: '团队管理',
-        key: '/home/self/space-manage',
+        key: '/self/space-manage',
       },
       {
         label: '个人设置',
-        key: '/home/self/manage',
+        key: '/self/manage',
       },
     ],
   },
   {
     label: '系统管理',
-    key: '/home/system',
+    key: '/system',
     icon: <Settings />,
     children: [
       {
         label: '系统用户',
-        key: '/home/system/users',
+        key: '/system/users',
       },
       {
         label: '系统字典',
-        key: '/home/system/dict',
+        key: '/system/dict',
       },
       {
         label: '系统菜单',
-        key: '/home/system/menu',
+        key: '/system/menu',
       },
     ],
   },
   {
     label: 'Moon社区',
-    key: '/home/community',
+    key: '/community',
     icon: <Newspaper />,
     children: [
       {
         label: '策略仓库',
-        key: '/home/community/strategy-template',
+        key: '/community/strategy-template',
       },
       {
         label: '讨论',
-        key: '/home/community/discussion',
+        key: '/community/discussion',
       },
     ],
   },

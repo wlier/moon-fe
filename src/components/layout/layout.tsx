@@ -1,28 +1,31 @@
 import { Logo } from '@/assets/logo'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { menus } from '@/config/menu'
+import { menus } from '@/config/menus'
 import {
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
   Menu,
   Moon,
+  PanelLeftClose,
+  PanelLeftOpen,
   SunMoon,
 } from 'lucide-react'
-import React, { useState } from 'react'
-import { BreadcrumbMenu } from './breadcrumb-menu'
-import { ComboboxTeam } from './combobox-team'
-import { CommandDialogSearch } from './command-dialog-search'
-import { Github } from './icon'
-import { useTheme } from './theme-provider'
-import { UserMenu } from './user-menu'
+import React, { Suspense, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { BreadcrumbMenu } from '../breadcrumb-menu'
+import { ComboboxTeam } from '../combobox-team'
+import { CommandDialogSearch } from '../command-dialog-search'
+import { Github } from '../icon'
+import { useTheme } from '../theme-provider'
+import { UserMenu } from '../user-menu'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
-export function Layout({ children }: LayoutProps) {
+export function MoonLayout({ children }: LayoutProps) {
+  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [expandedItems, setExpandedItems] = useState<{
     [key: string]: boolean
@@ -36,7 +39,7 @@ export function Layout({ children }: LayoutProps) {
   }
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen overflow-hidden'>
       {/* Header */}
       <header className='sticky top-0 z-40 bg-background border-b'>
         <div className='container flex h-16 items-center justify-between py-4'>
@@ -85,7 +88,7 @@ export function Layout({ children }: LayoutProps) {
             <div className='p-4'>
               <ComboboxTeam />
             </div>
-            <ScrollArea className='flex-grow py-4'>
+            <ScrollArea className='flex-grow pb-4 overflow-y-auto h-[calc(100vh-16rem)]'>
               <nav className='space-y-2 px-4 w-full'>
                 {menus?.map((item, index) => (
                   <div key={index} className='space-y-1'>
@@ -120,9 +123,10 @@ export function Layout({ children }: LayoutProps) {
                           {item?.children?.map((subItem, subIndex) => (
                             <Button
                               key={subIndex}
-                              onClick={() =>
+                              onClick={() => {
                                 setSelectKeys([item.key, subItem.key])
-                              }
+                                navigate(subItem.key)
+                              }}
                               variant={
                                 selectKeys.includes(subItem.key)
                                   ? 'default'
@@ -140,30 +144,28 @@ export function Layout({ children }: LayoutProps) {
                 ))}
               </nav>
             </ScrollArea>
-            <div className='p-4'>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='w-full'
-                onClick={toggleSidebar}
-              >
-                {sidebarOpen ? (
-                  <ChevronLeft className='h-6 w-6' />
-                ) : (
-                  <ChevronRight className='h-6 w-6' />
-                )}
-                <span className='sr-only'>Toggle sidebar</span>
-              </Button>
-            </div>
           </div>
         </aside>
 
         {/* Main content */}
-        <main
-          className={`flex-1 overflow-auto p-6 transition-all duration-200 ease-in-out`}
-        >
-          <BreadcrumbMenu />
-          {children}
+        <main className='flex-1 p-4'>
+          <div className='flex items-center gap-1 pb-4'>
+            <Button variant='ghost' size='icon' onClick={toggleSidebar}>
+              {!sidebarOpen ? (
+                <PanelLeftOpen className='h-6 w-6' />
+              ) : (
+                <PanelLeftClose className='h-6 w-6' />
+              )}
+              <span className='sr-only'>Toggle sidebar</span>
+            </Button>
+            <BreadcrumbMenu className='pt-1 pb-1' />
+          </div>
+
+          <div
+            className={`overflow-y-auto overflow-x-hidden transition-all duration-200 ease-in-out max-h-[calc(100vh-12rem)]`}
+          >
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          </div>
         </main>
       </div>
 

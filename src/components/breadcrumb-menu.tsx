@@ -7,9 +7,11 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
-export function BreadcrumbMenu() {
+export type BreadcrumbMenuProps = React.HTMLAttributes<HTMLDivElement>
+
+export function BreadcrumbMenu(props: BreadcrumbMenuProps) {
   return (
-    <Breadcrumb>
+    <Breadcrumb {...props}>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href='/'>Home</BreadcrumbLink>

@@ -1,14 +1,12 @@
-import { Layout } from '@/components/layout'
 import { ThemeProvider } from '@/components/theme-provider'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
+import { routes } from './config/routes'
 
 function App() {
   return (
     <>
       <ThemeProvider>
-        <Layout>
-          <h1 className='text-2xl font-bold mb-4'>Welcome to the Homepage</h1>
-          <p>This is the main content of your page.</p>
-        </Layout>
+        <RouterProvider router={createHashRouter(routes)} />
       </ThemeProvider>
     </>
   )
