@@ -1,20 +1,18 @@
 import {
   CircleUserRound,
-  Cloud,
-  CreditCard,
   Keyboard,
-  LifeBuoy,
   LogOut,
   Mail,
   MessageSquare,
   Plus,
-  PlusCircle,
   Settings,
   User,
   UserPlus,
   Users,
 } from 'lucide-react'
 
+import { logout } from '@/api/authorization'
+import { removeToken } from '@/api/request'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -30,9 +28,19 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Github } from './icon'
+import { useI18nConfig } from '@/locale'
 
 export function UserMenu() {
+  const {
+    Layout: { my },
+  } = useI18nConfig()
+
+  const handleLogout = () => {
+    logout().then(() => {
+      removeToken()
+    })
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,27 +49,22 @@ export function UserMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56'>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{my.title}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <User className='mr-2 h-4 w-4' />
-            <span>Profile</span>
+            <span>{my.profile}</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard className='mr-2 h-4 w-4' />
-            <span>Billing</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
             <Settings className='mr-2 h-4 w-4' />
-            <span>Settings</span>
+            <span>{my.settings}</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Keyboard className='mr-2 h-4 w-4' />
-            <span>Keyboard shortcuts</span>
+            <span>{my.KeyboardShortcuts}</span>
             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
@@ -69,54 +72,37 @@ export function UserMenu() {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Users className='mr-2 h-4 w-4' />
-            <span>Team</span>
+            <span>{my.team}</span>
           </DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <UserPlus className='mr-2 h-4 w-4' />
-              <span>Invite users</span>
+              <span>{my.inviteUsers.title}</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem>
                   <Mail className='mr-2 h-4 w-4' />
-                  <span>Email</span>
+                  <span>{my.inviteUsers.email}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <MessageSquare className='mr-2 h-4 w-4' />
-                  <span>Message</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <PlusCircle className='mr-2 h-4 w-4' />
-                  <span>More...</span>
+                  <span>{my.inviteUsers.phone}</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuItem>
             <Plus className='mr-2 h-4 w-4' />
-            <span>New Team</span>
+            <span>{my.newTeam}</span>
             <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Github className='mr-2 h-4 w-4' />
-          <span>GitHub</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <LifeBuoy className='mr-2 h-4 w-4' />
-          <span>Support</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem disabled>
-          <Cloud className='mr-2 h-4 w-4' />
-          <span>API</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
+
+        <DropdownMenuItem onClick={handleLogout}>
           <LogOut className='mr-2 h-4 w-4' />
-          <span>Log out</span>
+          <span>{my.logout}</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

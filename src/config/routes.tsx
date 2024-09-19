@@ -54,6 +54,6 @@ export const routes: RouteObject[] = [
   },
   {
     path: '/login',
-    element: <div>Login</div>,
+    Component: lazy(() => import('@/pages/login')),
   },
 ]

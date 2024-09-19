@@ -24,33 +24,41 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import useStorage from '@/hook/storage'
 import { ClassAttributes, HTMLAttributes, SVGProps } from 'react'
 import { JSX } from 'react/jsx-runtime'
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
 
 export function RealtimeAlert() {
+  const [defaultPageValue, setDefaultPageValue] =
+    useStorage<string>('defaultPageValue') || 'my'
   return (
     <div className='bg-background text-foreground p-6 rounded-lg shadow-md'>
       <div className='flex items-center justify-between mb-4'>
-        <h1 className='text-2xl font-bold'>Prometheus Alerts</h1>
+        <h1 className='text-2xl font-bold'>Alerts</h1>
         <Button variant='outline' size='sm' className='flex items-center gap-2'>
           <SettingsIcon className='w-4 h-4' />
           <span>Settings</span>
         </Button>
       </div>
-      <Tabs defaultValue='account' className='w-full'>
+      <Tabs
+        defaultValue={defaultPageValue}
+        onValueChange={setDefaultPageValue}
+        className='w-full'
+      >
         <TabsList className='w-full flex justify-start gap-3'>
+          <TabsTrigger value='my'>我的告警</TabsTrigger>
           <TabsTrigger value='realtime' className='flex items-center gap-2'>
             实时告警
             <Badge variant='outline' className='bg-red-500'>
               2
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value='my'>我的告警</TabsTrigger>
           <TabsTrigger value='light'>白班监控</TabsTrigger>
           <TabsTrigger value='dark'>夜班监控</TabsTrigger>
           <TabsTrigger value='test'>测试告警</TabsTrigger>
         </TabsList>
+        <TabsContent value='my'>my alarm page</TabsContent>
         <TabsContent value='realtime' className='w-full md:w-full'>
           <div className='grid gap-4'>
             <div className='flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-4'>
@@ -455,7 +463,6 @@ export function RealtimeAlert() {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value='my'>my alarm page</TabsContent>
       </Tabs>
     </div>
   )
