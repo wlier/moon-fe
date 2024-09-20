@@ -5,6 +5,7 @@ import { LocaleProvider } from './components/locale-provider'
 import { Toaster } from './components/ui/sonner'
 import { ModalProvider } from './components/use-func-modal'
 import { routes } from './config/routes'
+import { CreateTeamModalProvider } from './components/combobox-team'
 
 function App() {
   return (
@@ -12,10 +13,12 @@ function App() {
       <ThemeProvider>
         <LocaleProvider>
           <ModalProvider>
-            <Suspense fallback={<div>loading...</div>}>
-              <RouterProvider router={createHashRouter(routes)} />
-              <Toaster />
-            </Suspense>
+            <CreateTeamModalProvider>
+              <Suspense fallback={<div>loading...</div>}>
+                <RouterProvider router={createHashRouter(routes)} />
+                <Toaster />
+              </Suspense>
+            </CreateTeamModalProvider>
           </ModalProvider>
         </LocaleProvider>
       </ThemeProvider>

@@ -24,6 +24,10 @@ export default function Pagination({
   onPageChange,
   onPageSizeChange,
 }: PaginationProps) {
+  if (total <= 0) {
+    return null
+  }
+
   const [pages, setPages] = useState<(number | string)[]>([])
 
   useEffect(() => {

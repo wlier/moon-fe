@@ -12,9 +12,9 @@ import { useI18nConfig } from '@/locale'
 import React from 'react'
 import Loading from './loading'
 
-export type ColumnItem<T extends object, DataIndex extends keyof T> = {
+export type ColumnItem<T extends object> = {
   key: React.Key
-  dataIndex: DataIndex
+  dataIndex: keyof T
   label: string | React.ReactNode
   className?: string
   minWidth?: number
@@ -23,13 +23,13 @@ export type ColumnItem<T extends object, DataIndex extends keyof T> = {
   ellipsis?: boolean
   fixed?: 'left' | 'right'
   align?: 'left' | 'center' | 'right'
-  render?: (value: T[DataIndex], item: T, index: number) => React.ReactNode
+  render?: (value: any, item: T, index: number) => React.ReactNode
 }
 
 export interface AutoTableProps<T extends object> {
   title?: string | React.ReactNode
   data: T[]
-  columns: ColumnItem<T, keyof T>[]
+  columns: ColumnItem<T>[]
   actions?: React.ReactNode[]
   className?: string
   loading?: boolean

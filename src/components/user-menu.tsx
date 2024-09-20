@@ -29,11 +29,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useI18nConfig } from '@/locale'
+import { CreateTeamModalProviderContext } from './combobox-team'
+import { useContext } from 'react'
 
 export function UserMenu() {
   const {
     Layout: { my },
   } = useI18nConfig()
+  const createTeamContext = useContext(CreateTeamModalProviderContext)
 
   const handleLogout = () => {
     logout().then(() => {
@@ -92,7 +95,7 @@ export function UserMenu() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => createTeamContext?.setOpen?.(true)}>
             <Plus className='mr-2 h-4 w-4' />
             <span>{my.newTeam}</span>
             <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>

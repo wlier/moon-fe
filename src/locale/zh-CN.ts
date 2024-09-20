@@ -67,6 +67,37 @@ const zhCNI18n = {
       },
       KeyboardShortcuts: '快捷键',
     },
+    team: {
+      create: '创建团队',
+      cancel: '取消',
+      confirm: '确定',
+      form: {
+        name: {
+          error: {
+            required: '团队名称不能为空',
+            max: '团队名称不能超过20个字符',
+          },
+          label: '团队名称',
+          placeholder: '请输入团队名称',
+        },
+        logo: {
+          error: {
+            required: '团队logo不能为空',
+            max: '团队logo不能超过255个字符',
+          },
+          label: '团队logo',
+          placeholder: '请输入团队logo',
+        },
+        remark: {
+          error: {
+            required: '团队描述不能为空',
+            max: '团队描述不能超过255个字符',
+          },
+          label: '团队描述',
+          placeholder: '请输入团队描述',
+        },
+      },
+    },
   },
   AutoTable: {
     operation: '操作',

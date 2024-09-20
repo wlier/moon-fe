@@ -69,6 +69,37 @@ const enUSI18n: I18nLocaleType = {
       },
       KeyboardShortcuts: 'Keyboard shortcuts',
     },
+    team: {
+      create: 'Create Team',
+      cancel: 'Cancel',
+      confirm: 'Confirm',
+      form: {
+        name: {
+          error: {
+            required: 'Team name cannot be empty',
+            max: 'Team name cannot exceed 20 characters',
+          },
+          label: 'Name',
+          placeholder: 'Please enter the team name',
+        },
+        logo: {
+          error: {
+            required: 'Team logo cannot be empty',
+            max: 'Team logo cannot exceed 255 characters',
+          },
+          label: 'Logo',
+          placeholder: 'Please enter the team logo',
+        },
+        remark: {
+          error: {
+            required: 'Team description cannot be empty',
+            max: 'Team description cannot exceed 255 characters',
+          },
+          label: 'Description',
+          placeholder: 'Please enter the team description',
+        },
+      },
+    },
   },
   AutoTable: {
     operation: 'Operation',
