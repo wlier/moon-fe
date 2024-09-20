@@ -10,20 +10,34 @@ import {
 import { cn } from '@/lib/utils'
 import { useI18nConfig } from '@/locale'
 import React from 'react'
+import Loading from './loading'
 
-export type ColumnItem<T extends object> = {
-  key: /** T的key值 */ keyof T
+export type ColumnItem<T extends object, DataIndex extends keyof T> = {
+  key: React.Key
+  dataIndex: DataIndex
   label: string | React.ReactNode
   className?: string
   minWidth?: number
-  render?: (value: T[keyof T], item: T, index: number) => React.ReactNode
+  width?: number
+  maxWidth?: number
+  ellipsis?: boolean
+  fixed?: 'left' | 'right'
+  align?: 'left' | 'center' | 'right'
+  render?: (value: T[DataIndex], item: T, index: number) => React.ReactNode
 }
 
 export interface AutoTableProps<T extends object> {
   title?: string | React.ReactNode
   data: T[]
-  columns: ColumnItem<T>[]
+  columns: ColumnItem<T, keyof T>[]
   actions?: React.ReactNode[]
+  className?: string
+  loading?: boolean
+  onRowClick?: (item: T, index: number) => void
+  scroll?: {
+    x?: number | string
+    y?: number | string
+  }
   pagination?: {
     page: number
     pageSize: number
@@ -52,6 +66,10 @@ export function AutoTable(props: AutoTableProps<any>) {
     rowAction,
     rowActionWidth = 80,
     actions = [],
+    className,
+    scroll,
+    onRowClick,
+    loading,
   } = props
   const i18n = useI18nConfig()
 
@@ -67,8 +85,19 @@ export function AutoTable(props: AutoTableProps<any>) {
       </div>
       <div className='rounded-md border overflow-hidden'>
         <div className='overflow-x-auto'>
-          <Table>
-            <TableHeader>
+          <Table
+            className={cn(
+              className,
+              scroll && 'overflow-x-auto',
+              'min-h-[200px]'
+            )}
+          >
+            <TableHeader
+              className={cn(
+                'sticky top-0 bg-background z-20',
+                scroll && 'overflow-x-auto'
+              )}
+            >
               <TableRow>
                 {/* <TableHead className='w-[50px] sticky left-0 bg-background z-20'>
                   <TriStateCheckbox
@@ -80,9 +109,14 @@ export function AutoTable(props: AutoTableProps<any>) {
                   <TableHead
                     className={cn(
                       column.minWidth ? `min-w-[${column.minWidth}px]` : '',
+                      column.width ? `w-[${column.width}px]` : '',
+                      column.maxWidth ? `max-w-[${column.maxWidth}px]` : '',
+                      column.align ? `text-${column.align}` : '',
+                      column.ellipsis ? 'ellipsis' : '',
+                      column.fixed && `sticky ${column.fixed}`,
                       column.className
                     )}
-                    key={index}
+                    key={`${index}-${column.key}`}
                   >
                     {column.label}
                   </TableHead>
@@ -98,36 +132,50 @@ export function AutoTable(props: AutoTableProps<any>) {
                 )}
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {data.map((item, rowIndex) => (
-                <TableRow key={item[rowKey]}>
-                  {/* <TableCell className='sticky left-0 bg-background z-20'>
+            <TableBody
+              className={cn(scroll && 'overflow-x-auto', 'min-h-[200px]')}
+            >
+              {loading ? (
+                <Loading size='large' />
+              ) : (
+                data.map((item, rowIndex) => (
+                  <TableRow
+                    key={item[rowKey]}
+                    onClick={() => onRowClick?.(item, rowIndex)}
+                  >
+                    {/* <TableCell className='sticky left-0 bg-background z-20'>
                     <Checkbox />
                   </TableCell> */}
-                  {columns.map((column, index) => (
-                    <TableCell
-                      key={index}
-                      className={cn(
-                        `min-w-[${column.minWidth || 20}px]`,
-                        column.className
-                      )}
-                    >
-                      {column.render
-                        ? column.render(item[column.key], item, index)
-                        : item[column.key]}
-                    </TableCell>
-                  ))}
-                  {rowAction && (
-                    <TableCell
-                      className={cn(
-                        `sticky right-0 bg-background z-20 w-[${rowActionWidth}px]`
-                      )}
-                    >
-                      {rowAction(item, rowIndex)}
-                    </TableCell>
-                  )}
-                </TableRow>
-              ))}
+                    {columns.map((column, index) => (
+                      <TableCell
+                        key={`${index}-${column.key}`}
+                        className={cn(
+                          column.minWidth ? `min-w-[${column.minWidth}px]` : '',
+                          column.width ? `w-[${column.width}px]` : '',
+                          column.maxWidth ? `max-w-[${column.maxWidth}px]` : '',
+                          column.align ? `text-${column.align}` : '',
+                          column.ellipsis ? 'ellipsis' : '',
+                          column.fixed && `sticky ${column.fixed}`,
+                          column.className
+                        )}
+                      >
+                        {column.render
+                          ? column.render(item[column.dataIndex], item, index)
+                          : item[column.dataIndex]}
+                      </TableCell>
+                    ))}
+                    {rowAction && (
+                      <TableCell
+                        className={cn(
+                          `sticky right-0 bg-background z-20 w-[${rowActionWidth}px]`
+                        )}
+                      >
+                        {rowAction(item, rowIndex)}
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
