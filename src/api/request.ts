@@ -7,11 +7,13 @@ const host = window.location.origin
 
 const localhost = 'http://localhost:5173'
 const local127 = 'http://127.0.0.1:5173'
+const local192 = 'http://192.168.10.68:5173'
 
 export const hostMap: { [key: string]: string } = {
   [localhost]: 'http://dev-palace.aide-cloud.cn',
   // [local127]: 'http://dev-palace.aide-cloud.cn',
   [local127]: 'http://localhost:8000',
+  [local192]: 'http://192.168.10.2:8000',
 }
 
 const request = axios.create({
