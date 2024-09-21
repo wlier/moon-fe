@@ -98,6 +98,42 @@ const zhCNI18n = {
         },
       },
     },
+    strategy: {
+      group: {
+        edit: {
+          create: '创建策略组',
+          edit: '编辑策略组',
+          delete: '删除策略组',
+          cancel: '取消',
+          confirm: '确定',
+          form: {
+            name: {
+              error: {
+                required: '策略组名称不能为空',
+                max: '策略组名称不能超过20个字符',
+              },
+              label: '策略组名称',
+              placeholder: '请输入策略组名称',
+            },
+            remark: {
+              error: {
+                required: '策略组描述不能为空',
+                max: '策略组描述不能超过255个字符',
+              },
+              label: '策略组描述',
+              placeholder: '请输入策略组描述',
+            },
+            categoriesIds: {
+              error: {
+                required: '策略组分类不能为空',
+              },
+              label: '策略组分类',
+              placeholder: '请选择策略组分类',
+            },
+          },
+        },
+      },
+    },
   },
   AutoTable: {
     operation: '操作',

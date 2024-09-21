@@ -24,10 +24,6 @@ export default function Pagination({
   onPageChange,
   onPageSizeChange,
 }: PaginationProps) {
-  if (total <= 0) {
-    return null
-  }
-
   const [pages, setPages] = useState<(number | string)[]>([])
 
   useEffect(() => {
@@ -57,6 +53,10 @@ export default function Pagination({
 
     setPages(newPages)
   }, [total, page, pageSize])
+
+  if (total <= 0) {
+    return null
+  }
 
   return (
     <div className='flex items-center justify-end gap-2 p-1'>

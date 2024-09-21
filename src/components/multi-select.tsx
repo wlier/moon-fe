@@ -23,23 +23,26 @@ export type Option<T> = {
 
 interface MultiSelectProps<T> {
   options: Option<T>[]
-  selected: T[]
+  value: T[]
   disabled?: boolean
   onChange: (selected: T[]) => void
   placeholder?: string
+  className?: string
 }
 
 export function MultiSelect<T>({
   options,
-  selected,
+  value,
   disabled,
   onChange,
   placeholder = 'Select options...',
+
+  className,
 }: MultiSelectProps<T>) {
   const [open, setOpen] = React.useState(false)
 
   // Ensure selected is always an array
-  const selectedValues = Array.isArray(selected) ? selected : []
+  const selectedValues = Array.isArray(value) ? value : []
 
   const handleUnselect = (item: T) => {
     onChange(selectedValues.filter((i) => i !== item))
@@ -51,11 +54,17 @@ export function MultiSelect<T>({
         <div
           role='combobox'
           aria-expanded={open}
-          className={`w-full justify-between flex ${
-            disabled ? 'cursor-not-allowed' : ''
-          }`}
+          className={cn(
+            `w-full justify-between flex ${
+              disabled ? 'cursor-not-allowed' : ''
+            }`,
+            'border',
+            'rounded-md p-1',
+            'items-center',
+            className
+          )}
         >
-          <div className='flex-1 flex-wrap gap-1'>
+          <div className='flex-1 flex-wrap gap-1 h-7 overflow-hidden'>
             {selectedValues.length > 0 ? (
               selectedValues.map((item, index) => (
                 <Badge variant='secondary' key={index} className='mr-1 mb-1'>
@@ -82,7 +91,9 @@ export function MultiSelect<T>({
                 </Badge>
               ))
             ) : (
-              <span className='text-muted-foreground'>{placeholder}</span>
+              <span className='text-muted-foreground text-sm m-2'>
+                {placeholder}
+              </span>
             )}
           </div>
           <ChevronsUpDown className='h-4 w-4 shrink-0 opacity-50' />

@@ -1,4 +1,10 @@
-import { Condition, DatasourceType, Status, SustainType, TemplateSourceType } from '../enum'
+import {
+  Condition,
+  DatasourceType,
+  Status,
+  SustainType,
+  TemplateSourceType,
+} from '../enum'
 import { PaginationReply, PaginationReq } from '../global'
 import { StrategyGroupItem, StrategyItem } from '../model-types'
 import request from '../request'
@@ -155,7 +161,10 @@ export interface CreateStrategyLabelNoticeRequest {
  * @returns CreateStrategyGroupReply
  */
 export function createStrategyGroup(params: CreateStrategyGroupRequest) {
-  return request.POST<CreateStrategyGroupReply>('/v1/group/strategy/create', params)
+  return request.POST<CreateStrategyGroupReply>(
+    '/v1/group/strategy/create',
+    params
+  )
 }
 
 /**
@@ -164,7 +173,9 @@ export function createStrategyGroup(params: CreateStrategyGroupRequest) {
  * @returns DeleteStrategyGroupReply
  */
 export function deleteStrategyGroup(params: DeleteStrategyGroupRequest) {
-  return request.DELETE<DeleteStrategyGroupReply>(`/v1/group/strategy/${params.id}`)
+  return request.DELETE<DeleteStrategyGroupReply>(
+    `/v1/group/strategy/${params.id}`
+  )
 }
 
 /**
@@ -191,7 +202,10 @@ export function getStrategyGroup(params: GetStrategyGroupRequest) {
  * @returns UpdateStrategyGroupReply
  */
 export function updateStrategyGroup(params: UpdateStrategyGroupRequest) {
-  return request.PUT<UpdateStrategyGroupReply>(`/v1/group/strategy/${params.id}`, params.update)
+  return request.PUT<UpdateStrategyGroupReply>(
+    `/v1/group/strategy/${params.id}`,
+    params.update
+  )
 }
 
 /**
@@ -199,8 +213,13 @@ export function updateStrategyGroup(params: UpdateStrategyGroupRequest) {
  * @param params UpdateStrategyGroupStatusRequest
  * @returns UpdateStrategyGroupStatusReply
  */
-export function updateStrategyGroupStatus(params: UpdateStrategyGroupStatusRequest) {
-  return request.PUT<UpdateStrategyGroupStatusReply>('/v1/group/strategy/update/status', params)
+export function updateStrategyGroupStatus(
+  params: UpdateStrategyGroupStatusRequest
+) {
+  return request.PUT<UpdateStrategyGroupStatusReply>(
+    '/v1/group/strategy/update/status',
+    params
+  )
 }
 
 /**
@@ -218,7 +237,10 @@ export function createStrategy(params: CreateStrategyRequest) {
  * @returns UpdateStrategyReply
  */
 export function updateStrategy(params: UpdateStrategyRequest) {
-  return request.PUT<UpdateStrategyReply>(`/v1/strategy/update/${params.id}`, params.data)
+  return request.PUT<UpdateStrategyReply>(
+    `/v1/strategy/update/${params.id}`,
+    params.data
+  )
 }
 
 /**

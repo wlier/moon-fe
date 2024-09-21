@@ -48,7 +48,7 @@ export interface AutoTableProps<T extends object> {
   }
   rowKey: keyof T
   rowAction?: (item: T, index: number) => React.ReactNode
-  rowActionWidth?: number
+  actionClassName?: string
   select?: {
     selectedKeys?: React.Key[]
     onSelect?: (selected: T[]) => void
@@ -64,7 +64,7 @@ export function AutoTable(props: AutoTableProps<any>) {
     rowKey,
     title,
     rowAction,
-    rowActionWidth = 80,
+    actionClassName,
     actions = [],
     className,
     scroll,
@@ -122,11 +122,7 @@ export function AutoTable(props: AutoTableProps<any>) {
                   </TableHead>
                 ))}
                 {rowAction && (
-                  <TableHead
-                    className={cn(
-                      `sticky right-0 bg-background z-20 w-[${rowActionWidth}px] text-center`
-                    )}
-                  >
+                  <TableHead className={cn(actionClassName)}>
                     {i18n.AutoTable.operation}
                   </TableHead>
                 )}
@@ -165,11 +161,7 @@ export function AutoTable(props: AutoTableProps<any>) {
                       </TableCell>
                     ))}
                     {rowAction && (
-                      <TableCell
-                        className={cn(
-                          `sticky right-0 bg-background z-20 w-[${rowActionWidth}px]`
-                        )}
-                      >
+                      <TableCell className={cn(actionClassName)}>
                         {rowAction(item, rowIndex)}
                       </TableCell>
                     )}
