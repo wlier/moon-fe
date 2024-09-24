@@ -4,7 +4,7 @@ import { AutoTable, ColumnItem } from '@/components/auto-table'
 import { Button } from '@/components/ui/button'
 import { Plus, RefreshCcw, Upload } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { EditStrategyModal } from './edit-strategy-group-modal'
+import { EditStrategyGroupModal } from './edit-strategy-group-modal'
 import { Status } from '@/api/enum'
 import { MoreMenu } from '@/components/more-menu'
 import { ActionKey } from '@/api/global'
@@ -99,7 +99,7 @@ export default function StrategyGroup() {
 
   return (
     <>
-      <EditStrategyModal
+      <EditStrategyGroupModal
         onOk={handleRefresh}
         open={editStrategyGroupModalOpen}
         setOpen={setEditStrategyGroupModalOpen}

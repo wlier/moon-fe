@@ -1,6 +1,6 @@
 import { dictSelectList } from '@/api/dict'
 import { DictType, Status } from '@/api/enum'
-import { DictItem, SelectItem } from '@/api/model-types'
+import { SelectItem } from '@/api/model-types'
 import { createStrategyGroup } from '@/api/strategy'
 import { MultiSelect } from '@/components/multi-select'
 import {
@@ -39,7 +39,7 @@ export interface EditStrategyModalProps {
   onOk?: () => void
 }
 
-export function EditStrategyModal(props: EditStrategyModalProps) {
+export function EditStrategyGroupModal(props: EditStrategyModalProps) {
   const { id, open, setOpen, onOk } = props
 
   const {
