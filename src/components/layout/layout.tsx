@@ -22,7 +22,6 @@ import { useLocale } from '../locale-provider'
 import { MoonGithub } from '../moon-github'
 import { useTheme } from '../theme-provider'
 import { UserMenu } from '../user-menu'
-import { MoonGithub } from '../moon-github'
 
 interface LayoutProps {
   children: React.ReactNode
