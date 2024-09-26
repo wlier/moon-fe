@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 const host = window.location.origin
 
 const localhost = 'http://localhost:5173'
-const localhost5173 = 'http://localhost:5174'
+const localhost5173 = 'http://127.0.0.1:5174'
 const local127 = 'http://127.0.0.1:5173'
 const local192 = 'http://192.168.10.68:5173'
 

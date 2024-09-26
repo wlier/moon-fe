@@ -32,12 +32,12 @@ export const menus = (i18n: I18nLocaleType): MenuItem[] => {
       icon: <Monitor />,
       children: [
         {
-          label: i18n.Layout.menu.monitorDashboard,
-          key: '/monitor/dashboard',
-        },
-        {
           label: i18n.Layout.menu.monitorAlarm,
           key: '/monitor/alarm',
+        },
+        {
+          label: i18n.Layout.menu.monitorDashboard,
+          key: '/monitor/dashboard',
         },
       ],
     },
