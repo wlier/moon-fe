@@ -53,6 +53,11 @@ export const routes: RouteObject[] = [
     ],
   },
   {
+    path: '/',
+    // 重定向/home
+    element: <Navigate to='/monitor/dashboard' replace={true} />,
+  },
+  {
     path: '/login',
     Component: lazy(() => import('@/pages/login')),
   },

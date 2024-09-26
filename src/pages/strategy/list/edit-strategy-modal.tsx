@@ -9,12 +9,11 @@ import {
 import {
   AlarmNoticeGroupItem,
   DatasourceItem,
-  SelectItem,
   StrategyGroupItem,
 } from '@/api/model-types'
 import { createStrategy, listStrategyGroup } from '@/api/strategy'
 import { MultiSelect } from '@/components/multi-select'
-import { SelectX } from '@/components/select'
+import { Option, SearchableSelect } from '@/components/select'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -52,6 +51,7 @@ import {
   SustainTypeData,
 } from '@/api/global'
 import { DynamicKeyValueInput } from '@/components/dynamic-key-value-input'
+import { listDatasource } from '@/api/datasource'
 
 export interface EditStrategyModalProps {
   id?: number
@@ -67,7 +67,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
   const {
     Layout: {
       strategy: {
-        group: { edit },
+        list: { edit },
       },
     },
   } = useI18nConfig()
@@ -148,6 +148,18 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
     })
   }
 
+  const handleGetDatasourceList = () => {
+    listDatasource({
+      pagination: { pageNum: 1, pageSize: 999 },
+    }).then((res) => {
+      setDatasourceList(res.list)
+    })
+  }
+
+  const handleGetAlarmNoticeGroupList = () => {
+    setAlarmNoticeGroupList([])
+  }
+
   const handleCancel = () => {
     form.reset()
     setOpen?.(false)
@@ -161,8 +173,8 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
     })
   }
 
-  const [categories, setCategories] = useState<SelectItem[]>([])
-  const [alarmLevelList, setAlarmLevelList] = useState<SelectItem[]>([])
+  const [categories, setCategories] = useState<Option[]>([])
+  const [alarmLevelList, setAlarmLevelList] = useState<Option[]>([])
 
   const getAlarmLevelList = () => {
     dictSelectList({
@@ -185,9 +197,9 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
   const handleGetCategories = () => {
     dictSelectList({
       pagination: { pageNum: 1, pageSize: 999 },
-      dictType: DictType.DictTypeStrategyGroupCategory,
+      dictType: DictType.DictTypeStrategyCategory,
     }).then((res) => {
-      setCategories(res.list)
+      setCategories(res?.list || [])
     })
   }
 
@@ -199,36 +211,43 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
       handleGetCategories()
       handleGetGroups()
       getAlarmLevelList()
+      handleGetDatasourceList()
+      handleGetAlarmNoticeGroupList()
     }, 100)
   }, [])
 
   return (
     <Form {...form}>
       <AlertDialog open={open}>
-        <AlertDialogContent className='max-w-[60%] min-w-[600px] max-h-[80%]'>
-          <AlertDialogHeader>
-            <AlertDialogTitle className='flex items-center space-x-2 gap-1'>
-              创建策略
-              <Button
-                variant='ghost'
-                className='ml-auto'
-                onClick={() => setOpen?.(false)}
-              >
-                <X />
-              </Button>
-            </AlertDialogTitle>
-          </AlertDialogHeader>
-          <AlertDialogDescription className='h-0'>
-            <div className='h-[1px] bg-gray-200 dark:bg-gray-700' />
-          </AlertDialogDescription>
+        <AlertDialogContent
+          className={cn(
+            'max-w-[60vw] min-w-[600px] max-h-[80vh] flex',
+            'flex-col'
+          )}
+        >
+          <div>
+            <AlertDialogHeader>
+              <AlertDialogTitle className='flex items-center space-x-2 gap-1'>
+                {id ? edit.edit : edit.create}
+                <Button
+                  variant='ghost'
+                  className='ml-auto'
+                  onClick={() => setOpen?.(false)}
+                >
+                  <X />
+                </Button>
+              </AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogDescription className='h-0'>
+              <div className='h-[1px] bg-gray-200 dark:bg-gray-700' />
+            </AlertDialogDescription>
+          </div>
 
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className='space-y-4 max-h-[80%]'
+            className={cn('space-y-4', 'flex-1', 'overflow-y-auto', 'mb-9')}
           >
-            <div
-              className={cn('max-h-[74%] overflow-y-auto', 'p-4', 'space-y-4 ')}
-            >
+            <div className={cn('p-4', 'space-y-4')}>
               <div className={cn('md:grid md:grid-cols-2 md:gap-6')}>
                 <FormField
                   control={form.control}
@@ -239,11 +258,13 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                         className={cn('flex items-center space-x-2 gap-1')}
                       >
                         <div className='text-red-500'>*</div>
-                        策略组
+                        {edit.form.groupId.label}
                       </FormLabel>
                       <FormControl className='w-full'>
-                        <SelectX
+                        <SearchableSelect
                           {...field}
+                          mode='single'
+                          placeholder={edit.form.groupId.placeholder}
                           options={strategyGroups.map((item) => ({
                             label: item.name,
                             value: item.id,
@@ -263,7 +284,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                         className={cn('flex items-center space-x-2 gap-1')}
                       >
                         <div className='text-red-500'>*</div>
-                        数据源类型
+                        {edit.form.sourceType.label}
                         <FormMessage />
                       </FormLabel>
                       <FormControl>
@@ -311,11 +332,14 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                   <FormItem>
                     <FormLabel className='flex items-center space-x-2 gap-1'>
                       <div className='text-red-500'>*</div>
-                      数据源
+                      {edit.form.datasourceIds.label}
                       <FormMessage />
                     </FormLabel>
                     <FormControl>
-                      <MultiSelect
+                      <SearchableSelect
+                        {...field}
+                        mode='multiple'
+                        placeholder={edit.form.datasourceIds.placeholder}
                         options={datasourceList.map((item) => ({
                           label: item.name,
                           value: item.id,
@@ -355,7 +379,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                     <FormItem>
                       <FormLabel className='flex items-center space-x-2 gap-1'>
                         <div className='text-red-500'>*</div>
-                        采样率
+                        {edit.form.step.label}
                         <FormMessage />
                       </FormLabel>
                       <FormControl>
@@ -364,7 +388,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                           type='number'
                           min={1}
                           max={100}
-                          placeholder='请输入采样率'
+                          placeholder={edit.form.step.placeholder}
                         />
                       </FormControl>
                     </FormItem>
@@ -381,10 +405,11 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       {edit.form.categoriesIds.label}
                     </FormLabel>
                     <FormControl>
-                      <MultiSelect
+                      <SearchableSelect
                         {...field}
+                        mode='multiple'
                         options={categories}
-                        placeholder='请选择分类'
+                        placeholder={edit.form.categoriesIds.placeholder}
                       />
                     </FormControl>
                   </FormItem>
@@ -397,10 +422,13 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                   <FormItem>
                     <FormLabel className='flex items-center space-x-2 gap-1'>
                       <div className='text-red-500'>*</div>
-                      表达式
+                      {edit.form.expr.label}
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder='请输入表达式' />
+                      <Input
+                        {...field}
+                        placeholder={edit.form.expr.placeholder}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -412,16 +440,17 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                   <FormItem>
                     <FormLabel className='flex items-center space-x-2 gap-1'>
                       <div className='text-red-500'>*</div>
-                      通知对象
+                      {edit.form.alarmGroupIds.label}
                     </FormLabel>
                     <FormControl>
-                      <MultiSelect
+                      <SearchableSelect
                         {...field}
+                        mode='multiple'
                         options={alarmNoticeGroupList.map((item) => ({
                           label: item.name,
                           value: item.id,
                         }))}
-                        placeholder='请选择告警通知对象'
+                        placeholder={edit.form.alarmGroupIds.placeholder}
                       />
                     </FormControl>
                   </FormItem>
@@ -434,13 +463,12 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='flex items-center space-x-2 gap-1'>
-                      Labels
+                      {edit.form.labels.label}
                       <FormMessage />
                     </FormLabel>
                     <FormControl>
                       <DynamicKeyValueInput
                         value={
-                          // field.value 转key value数组
                           field.value
                             ? Object.entries(field.value).map(
                                 ([key, value]) => ({
@@ -464,7 +492,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       />
                     </FormControl>
                     <FormDescription>
-                      Enter your key-value pairs here.
+                      {edit.form.labels.addRemark}
                     </FormDescription>
                   </FormItem>
                 )}
@@ -475,7 +503,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                 render={({ field }) => (
                   <FormItem {...field}>
                     <FormLabel className='flex items-center space-x-2 gap-1'>
-                      Annotations
+                      {edit.form.annotations.label}
                       <FormMessage />
                     </FormLabel>
                     <FormControl>
@@ -486,14 +514,16 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className='flex items-center space-x-2 gap-1'>
-                              Summary
+                              {edit.form.annotations.summery.label}
                               <FormMessage />
                             </FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
                                 autoComplete='off'
-                                placeholder='Enter your summary here.'
+                                placeholder={
+                                  edit.form.annotations.summery.placeholder
+                                }
                               />
                             </FormControl>
                           </FormItem>
@@ -507,14 +537,16 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className='flex items-center space-x-2 gap-1'>
-                              Description
+                              {edit.form.annotations.description.label}
                               <FormMessage />
                             </FormLabel>
                             <FormControl>
                               <Textarea
                                 {...field}
                                 autoComplete='off'
-                                placeholder='Enter your description here.'
+                                placeholder={
+                                  edit.form.annotations.description.placeholder
+                                }
                               />
                             </FormControl>
                           </FormItem>
@@ -527,7 +559,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
               {strategyLevelFields.map((field, strategyIndex) => (
                 <div key={field.id} className='p-6 border rounded-lg space-y-6'>
                   <h3 className='text-lg font-semibold'>
-                    策略等级明细 {strategyIndex + 1}
+                    {edit.form.strategyLevel.label} {strategyIndex + 1}
                   </h3>
                   <div className='grid grid-cols-2 gap-4'>
                     <FormField
@@ -536,10 +568,17 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            告警等级
+                            {edit.form.strategyLevel.levelId.label}
                             <FormMessage />
                           </FormLabel>
-                          <SelectX {...field} options={alarmLevelList} />
+                          <SearchableSelect
+                            {...field}
+                            mode='single'
+                            options={alarmLevelList}
+                            placeholder={
+                              edit.form.strategyLevel.levelId.placeholder
+                            }
+                          />
                         </FormItem>
                       )}
                     />
@@ -549,10 +588,15 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            判断条件 <FormMessage />
+                            {edit.form.strategyLevel.condition.label}{' '}
+                            <FormMessage />
                           </FormLabel>
-                          <SelectX
+                          <SearchableSelect
                             {...field}
+                            mode='single'
+                            placeholder={
+                              edit.form.strategyLevel.condition.placeholder
+                            }
                             options={Object.entries(ConditionData)
                               .filter(([key]) => {
                                 return +key !== Condition.ConditionUnknown
@@ -573,11 +617,15 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       name={`strategyLevel.${strategyIndex}.threshold`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>阈值</FormLabel>
+                          <FormLabel>
+                            {edit.form.strategyLevel.threshold.label}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type='text'
-                              placeholder='请输入阈值'
+                              placeholder={
+                                edit.form.strategyLevel.threshold.placeholder
+                              }
                               {...field}
                             />
                           </FormControl>
@@ -591,10 +639,15 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            触发类型 <FormMessage />
+                            {edit.form.strategyLevel.sustainType.label}{' '}
+                            <FormMessage />
                           </FormLabel>
-                          <SelectX
+                          <SearchableSelect
                             {...field}
+                            mode='single'
+                            placeholder={
+                              edit.form.strategyLevel.sustainType.placeholder
+                            }
                             options={Object.entries(SustainTypeData)
                               .filter(([key]) => {
                                 return +key !== SustainType.SustainTypeUnknown
@@ -616,12 +669,15 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            持续时间 <FormMessage />
+                            {edit.form.strategyLevel.duration.label}{' '}
+                            <FormMessage />
                           </FormLabel>
                           <FormControl>
                             <Input
                               type='number'
-                              placeholder='持续时间（秒）'
+                              placeholder={
+                                edit.form.strategyLevel.duration.placeholder
+                              }
                               {...field}
                             />
                           </FormControl>
@@ -634,13 +690,15 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            持续次数
+                            {edit.form.strategyLevel.count.label}
                             <FormMessage />
                           </FormLabel>
                           <FormControl>
                             <Input
                               type='number'
-                              placeholder='持续次数'
+                              placeholder={
+                                edit.form.strategyLevel.count.placeholder
+                              }
                               {...field}
                             />
                           </FormControl>
@@ -654,7 +712,8 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          通知对象 <FormMessage />
+                          {edit.form.strategyLevel.alarmGroupIds.label}{' '}
+                          <FormMessage />
                         </FormLabel>
                         <MultiSelect
                           options={alarmNoticeGroupList.map((item) => {
@@ -665,14 +724,16 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                           })}
                           value={field.value}
                           onChange={field.onChange}
-                          placeholder='请选择通知对象'
+                          placeholder={
+                            edit.form.strategyLevel.alarmGroupIds.placeholder
+                          }
                         />
                       </FormItem>
                     )}
                   />
                   <div>
                     <h4 className='text-sm font-semibold mb-2'>
-                      label通知对象
+                      {edit.form.strategyLevel.labelNotices.label}
                     </h4>
                     <Controller
                       name={`strategyLevel.${strategyIndex}.labelNotices`}
@@ -744,7 +805,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                             }}
                           >
                             <PlusCircle className='mr-2 h-4 w-4' />
-                            添加新 label 通知对象
+                            {edit.form.strategyLevel.labelNotices.add}
                           </Button>
                         </div>
                       )}
@@ -772,7 +833,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                 }
               >
                 <PlusCircle className='mr-2 h-4 w-4' />
-                添加策略等级
+                {edit.form.strategyLevel.add}
               </Button>
 
               <FormField
@@ -796,7 +857,12 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
               />
             </div>
 
-            <AlertDialogFooter>
+            <AlertDialogFooter
+              className={cn(
+                'fixed bottom-0 left-0 right-0 p-4'
+              )}
+            >
+              <div className='h-[1px] bg-gray-200 dark:bg-gray-700' />
               <AlertDialogCancel type='reset' onClick={handleCancel}>
                 {edit.cancel}
               </AlertDialogCancel>

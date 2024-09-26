@@ -140,6 +140,175 @@ const zhCNI18n = {
           },
         },
       },
+      list: {
+        edit: {
+          create: '创建策略',
+          edit: '编辑策略',
+          delete: '删除策略',
+          cancel: '取消',
+          confirm: '确定',
+          form: {
+            name: {
+              error: {
+                required: '策略名称不能为空',
+                max: '策略名称不能超过20个字符',
+              },
+              label: '策略名称',
+              placeholder: '请输入策略名称',
+            },
+            groupId: {
+              error: {
+                required: '策略组不能为空',
+              },
+              label: '策略组',
+              placeholder: '请选择策略组',
+            },
+            sourceType: {
+              error: {
+                required: '数据源类型不能为空',
+              },
+              label: '数据源类型',
+              placeholder: '请选择数据源类型',
+            },
+            remark: {
+              error: {
+                required: '策略描述不能为空',
+                max: '策略描述不能超过255个字符',
+              },
+              label: '策略描述',
+              placeholder: '请输入策略描述',
+            },
+            categoriesIds: {
+              error: {
+                required: '策略分类不能为空',
+              },
+              label: '策略分类',
+              placeholder: '请选择策略分类',
+            },
+            datasourceIds: {
+              error: {
+                required: '数据源不能为空',
+              },
+              label: '数据源',
+              placeholder: '请选择数据源',
+            },
+            step: {
+              error: {
+                required: '采样率不能为空',
+                min: '采样率不能小于1',
+                max: '采样率不能大于100',
+              },
+              label: '采样率',
+              placeholder: '请输入采样率',
+            },
+            expr: {
+              error: {
+                required: '告警表达式不能为空',
+              },
+              label: '告警表达式',
+              placeholder: '请输入告警表达式',
+            },
+            alarmGroupIds: {
+              error: {
+                required: '通知对象不能为空',
+              },
+              label: '通知对象',
+              placeholder: '请选择通知对象',
+            },
+            labels: {
+              error: {},
+              label: '标签',
+              placeholder: '请输入标签',
+              add: '添加标签',
+              addRemark: '在这里输入键值对',
+            },
+            annotations: {
+              error: {},
+              label: '注解',
+              placeholder: '请输入注解',
+              add: '添加注解',
+              addRemark: '在这里输入键值对',
+              summery: {
+                label: '告警摘要',
+                placeholder: '请输入告警摘要',
+                error: {
+                  required: '告警摘要不能为空',
+                },
+              },
+              description: {
+                label: '告警描述',
+                placeholder: '请输入告警描述',
+                error: {
+                  required: '告警描述不能为空',
+                },
+              },
+            },
+            strategyLevel: {
+              add: '添加策略等级',
+              error: {
+                required: '策略等级明细不能为空',
+              },
+              label: '策略等级明细',
+              levelId: {
+                error: {
+                  required: '告警等级不能为空',
+                },
+                label: '告警等级',
+                placeholder: '请选择告警等级',
+              },
+              condition: {
+                error: {
+                  required: '判断条件不能为空',
+                },
+                label: '判断条件',
+                placeholder: '请选择判断条件',
+              },
+              threshold: {
+                error: {
+                  required: '阈值不能为空',
+                },
+                label: '阈值',
+                placeholder: '请输入阈值',
+              },
+              sustainType: {
+                error: {
+                  required: '触发类型不能为空',
+                },
+                label: '触发类型',
+                placeholder: '请选择触发类型',
+              },
+              duration: {
+                error: {
+                  required: '持续时长不能为空',
+                },
+                label: '持续时长',
+                placeholder: '请输入持续时长（秒）',
+              },
+              count: {
+                error: {
+                  required: '告警次数不能为空',
+                },
+                label: '告警次数',
+                placeholder: '请输入告警次数',
+              },
+              alarmGroupIds: {
+                error: {
+                  required: '通知对象不能为空',
+                },
+                label: '通知对象',
+                placeholder: '请选择通知对象',
+              },
+              labelNotices: {
+                error: {},
+                label: '标签通知对象',
+                placeholder: '请输入标签通知',
+                add: '添加标签通知对象',
+                addRemark: '在这里输入键值对',
+              },
+            },
+          },
+        },
+      },
     },
   },
   AutoTable: {

@@ -37,6 +37,8 @@ export function MultiSelect<T>({
   disabled,
   onChange,
   placeholder = 'Select options...',
+
+  className,
 }: MultiSelectProps<T>) {
   const [open, setOpen] = React.useState(false)
 
