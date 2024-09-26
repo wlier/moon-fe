@@ -31,13 +31,12 @@ interface MultiSelectProps<T> {
 }
 
 export function MultiSelect<T>({
+  className,
   options,
   value,
   disabled,
   onChange,
   placeholder = 'Select options...',
-
-  className,
 }: MultiSelectProps<T>) {
   const [open, setOpen] = React.useState(false)
 

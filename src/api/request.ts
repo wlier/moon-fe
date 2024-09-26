@@ -121,12 +121,12 @@ export default {
 const errorHandle = (err: ErrorResponse) => {
   switch (err.code) {
     case 400:
-      openModal({
-        title: 'custom err1',
-        description: 'xxxx',
-        content: 'content',
-        duration: 10000,
-      })
+      // openModal({
+      //   title: 'custom err1',
+      //   description: 'xxxx',
+      //   content: 'content',
+      //   duration: 10000,
+      // })
       // 表单告警
       break
     case 401:

@@ -53,12 +53,16 @@ export const routes: RouteObject[] = [
     ],
   },
   {
+    path: '/login',
+    Component: lazy(() => import('@/pages/login')),
+  },
+  {
+    path: '/oauth/register/email',
+    Component: lazy(() => import('@/pages/login/oauth/email')),
+  },
+  {
     path: '/',
     // 重定向/home
     element: <Navigate to='/monitor/dashboard' replace={true} />,
-  },
-  {
-    path: '/login',
-    Component: lazy(() => import('@/pages/login')),
   },
 ]

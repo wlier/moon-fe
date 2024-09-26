@@ -19,9 +19,9 @@ import { BreadcrumbMenu } from '../breadcrumb-menu'
 import { ComboboxTeam } from '../combobox-team'
 import { CommandDialogSearch } from '../command-dialog-search'
 import { useLocale } from '../locale-provider'
+import { MoonGithub } from '../moon-github'
 import { useTheme } from '../theme-provider'
 import { UserMenu } from '../user-menu'
-import { MoonGithub } from '../moon-github'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -44,19 +44,17 @@ export function MoonLayout({ children }: LayoutProps) {
   const search = window.location.search
   const authToken = new URLSearchParams(search).get('token')
 
-  useEffect(() => {
-    if (authToken) {
-      setToken(authToken)
-      // 清除search
-      window.location.search = ''
-      return
-    }
-  }, [authToken])
+  if (authToken) {
+    setToken(authToken)
+    // 清除search
+    window.location.search = ''
+  }
+
+  if (timer) {
+    clearTimeout(timer)
+  }
 
   if (!isLogin() && !authToken) {
-    if (timer) {
-      clearTimeout(timer)
-    }
     timer = setTimeout(() => {
       navigate('/login')
     }, 1000)
