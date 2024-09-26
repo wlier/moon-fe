@@ -1,5 +1,5 @@
 import { CaptchaType } from '../enum'
-import { TeamMemberItem, UserItem } from '../model-types'
+import { UserItem } from '../model-types'
 import request from '../request'
 
 /**
@@ -41,28 +41,25 @@ export function getCaptcha(params: CaptchaReq): Promise<CaptchaReply> {
 }
 
 /**
- * 校验用户在当前资源下是否有权限
- * @param {CheckPermissionRequest} params
- * @returns {Promise<CheckPermissionReply>}
+ * 验证邮箱
+ * post /v1/authorization/verify_email
+ * @param {VerifyEmailRepquest} params
+ * @returns {Promise<VerifyEmailReply>}
  */
-export function checkPermission(
-  params: CheckPermissionRequest
-): Promise<CheckPermissionReply> {
-  return request.POST<CheckPermissionReply>(
-    '/v1/authorization/check_permission',
-    params
-  )
+export function verifyEmail(params: VerifyEmailRepquest): Promise<void> {
+  return request.POST('/v1/authorization/verify_email', params)
 }
 
 /**
- * 校验 token 是否登录中的状态
- * @param {CheckTokenRequest} params
- * @returns {Promise<CheckTokenReply>}
+ * 设置账号邮箱
+ * post /v1/authorization/set_email
+ * @param {SetEmailRequest} params
+ * @returns {Promise<SetEmailReply>}
  */
-export function checkToken(
-  params: CheckTokenRequest
-): Promise<CheckTokenReply> {
-  return request.POST<CheckTokenReply>('/v1/authorization/check_token', params)
+export function setEmailWithLogin(
+  params: SetEmailRequest
+): Promise<RefreshTokenReply> {
+  return request.POST('/v1/authorization/set_email', params)
 }
 
 // Types
@@ -110,11 +107,6 @@ export interface LoginReply {
    */
   redirect?: string
 }
-
-/**
- * 登出请求
- */
-export interface LogoutRequest {}
 
 /**
  * 登出响应
@@ -202,44 +194,33 @@ export interface AuthCaptcha {
 }
 
 /**
- * 校验权限请求
+ * 验证邮箱请求
  */
-export interface CheckPermissionRequest {
+export interface VerifyEmailRepquest {
   /**
-   * 资源
+   * 邮箱
    */
-  operation: string
+  email: string
+  /**
+   * 验证码
+   */
+  captcha: AuthCaptcha
 }
 
 /**
- * 校验权限响应
+ * 设置邮箱请求
  */
-export interface CheckPermissionReply {
+export interface SetEmailRequest {
   /**
-   * 是否有权限
+   * 邮箱
    */
-  hasPermission: boolean
+  email: string
   /**
-   * 团队成员信息
+   * 验证码
    */
-  teamMember: TeamMemberItem
-}
-
-/**
- * 校验 token 请求
- */
-export interface CheckTokenRequest {}
-
-/**
- * 校验 token 响应
- */
-export interface CheckTokenReply {
+  code: string
   /**
-   * 是否已登录
+   * OAuthID
    */
-  isLogin: boolean
-  /**
-   * 用户信息
-   */
-  user: UserItem
+  oauthID: number
 }

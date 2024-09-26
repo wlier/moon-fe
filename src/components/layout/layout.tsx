@@ -19,6 +19,7 @@ import { BreadcrumbMenu } from '../breadcrumb-menu'
 import { ComboboxTeam } from '../combobox-team'
 import { CommandDialogSearch } from '../command-dialog-search'
 import { useLocale } from '../locale-provider'
+import { MoonGithub } from '../moon-github'
 import { useTheme } from '../theme-provider'
 import { UserMenu } from '../user-menu'
 import { MoonGithub } from '../moon-github'
@@ -57,6 +58,7 @@ export function MoonLayout({ children }: LayoutProps) {
     if (timer) {
       clearTimeout(timer)
     }
+
     timer = setTimeout(() => {
       navigate('/login')
     }, 1000)

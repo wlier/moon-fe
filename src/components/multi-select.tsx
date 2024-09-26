@@ -31,6 +31,7 @@ interface MultiSelectProps<T> {
 }
 
 export function MultiSelect<T>({
+  className,
   options,
   value,
   disabled,

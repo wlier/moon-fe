@@ -859,7 +859,6 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
 
             <AlertDialogFooter
               className={cn(
-                // 固定到底部
                 'fixed bottom-0 left-0 right-0 p-4'
               )}
             >
