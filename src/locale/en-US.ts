@@ -33,8 +33,8 @@ const enUSI18n: I18nLocaleType = {
       },
     },
     locale: {
-      'en-US': 'English',
-      'zh-CN': 'Chinese',
+      'en-US': '中文',
+      'zh-CN': 'English',
     },
     mode: {
       dark: 'Dark Mode',
@@ -43,6 +43,13 @@ const enUSI18n: I18nLocaleType = {
     },
   },
   Layout: {
+    footer: {
+      copyright: '© 2023 Moon monitor.',
+      rights: 'All rights reserved.',
+      version: 'version',
+      privacyPolicy: 'Privacy Policy',
+      termsService: 'Terms of Service',
+    },
     menu: {
       monitor: 'Monitor',
       monitorDashboard: 'Dashboard',
@@ -97,6 +104,42 @@ const enUSI18n: I18nLocaleType = {
           },
           label: 'Description',
           placeholder: 'Please enter the team description',
+        },
+      },
+    },
+    strategy: {
+      group: {
+        edit: {
+          create: 'Create Strategy Group',
+          edit: 'Edit Strategy Group',
+          delete: 'Delete Strategy Group',
+          cancel: 'Cancel',
+          confirm: 'Confirm',
+          form: {
+            name: {
+              error: {
+                required: 'Strategy group name cannot be empty',
+                max: 'Strategy group name cannot exceed 20 characters',
+              },
+              label: 'Name',
+              placeholder: 'Please enter the strategy group name',
+            },
+            remark: {
+              error: {
+                required: 'Strategy group description cannot be empty',
+                max: 'Strategy group description cannot exceed 255 characters',
+              },
+              label: 'Description',
+              placeholder: 'Please enter the strategy group description',
+            },
+            categoriesIds: {
+              error: {
+                required: 'Strategy group classification cannot be empty',
+              },
+              label: 'Classification',
+              placeholder: 'Please select the strategy group classification',
+            },
+          },
         },
       },
     },

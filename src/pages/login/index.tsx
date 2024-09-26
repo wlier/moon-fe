@@ -1,9 +1,10 @@
 import { CaptchaReply, getCaptcha, login } from '@/api/authorization'
 import { CaptchaType } from '@/api/enum'
-import { setToken } from '@/api/request'
+import { baseURL, setToken } from '@/api/request'
 import { Logo } from '@/assets/logo'
-import { GlobeIcon } from '@/components/icon'
+import { Gitee, Github, GlobeIcon } from '@/components/icon'
 import { useLocale } from '@/components/locale-provider'
+import { MoonGithub } from '@/components/moon-github'
 import { useTheme } from '@/components/theme-provider'
 import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-with-collision'
 import { Button } from '@/components/ui/button'
@@ -58,7 +59,7 @@ export default function Login() {
 
   const form = useForm<LoginFormValuesType>({
     resolver: zodResolver(loginFormSchema),
-    defaultValues: cookie.load('account'),
+    defaultValues: { ...cookie.load('account'), captcha: '' },
   })
 
   const onSubmit = (value: LoginFormValuesType) => {
@@ -276,20 +277,47 @@ export default function Login() {
             </div>
           </div>
 
-          <div className='text-center'>
-            {i18n.Login.form.loginFooter}
-            <a
-              href='/#/register'
-              className='font-medium text-primary hover:text-primary/80'
-            >
-              {i18n.Login.form.registerLink}
-            </a>
+          <div className='mt-6'>
+            <p className='text-center text-sm text-gray-400 mb-4'>
+              {i18n.Login.form.loginFooter}
+              <a
+                href='/#/register'
+                className='font-medium text-primary hover:text-primary/80'
+              >
+                {i18n.Login.form.registerLink}
+              </a>
+              , 或使用以下方式登录
+            </p>
+            <div className='flex justify-between space-x-4'>
+              <Button
+                variant='outline'
+                className='w-1/2'
+                onClick={() => {
+                  window.location.href = `${baseURL}/auth/github`
+                }}
+              >
+                <Github className='mr-2 h-4 w-4' />
+                GitHub
+              </Button>
+
+              <Button
+                variant='outline'
+                className='w-1/2'
+                onClick={() => {
+                  window.location.href = `${baseURL}/auth/gitee`
+                }}
+              >
+                <Gitee className='mr-2 h-4 w-4' />
+                Gitee
+              </Button>
+            </div>
           </div>
         </div>
       </div>
       <div className='absolute top-6 right-6 flex items-center space-x-4 justify-end'>
+        <MoonGithub>Github</MoonGithub>
         <Button
-          variant='secondary'
+          variant='ghost'
           onClick={() =>
             locale.setLocale(locale.locale === 'zh-CN' ? 'en-US' : 'zh-CN')
           }
@@ -298,7 +326,7 @@ export default function Login() {
           {i18n.Login.locale[locale.locale]}
         </Button>
         <Button
-          variant='secondary'
+          variant='ghost'
           onClick={() =>
             theme.setTheme(theme.theme === 'dark' ? 'light' : 'dark')
           }

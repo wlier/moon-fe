@@ -197,7 +197,7 @@ export default function StrategyEditForm() {
                       { label: 'Option 2', value: 2 },
                       { label: 'Option 3', value: 3 },
                     ]}
-                    selected={field.value}
+                    value={field.value}
                     onChange={(selected: number[]) => {
                       field.value = selected
                     }}
@@ -257,7 +257,7 @@ export default function StrategyEditForm() {
                         { label: 'Option 2', value: 2 },
                         { label: 'Option 3', value: 3 },
                       ]}
-                      selected={field.value}
+                      value={field.value}
                       onChange={(selected: number[]) => {
                         field.value = selected
                       }}
@@ -404,7 +404,7 @@ export default function StrategyEditForm() {
                             { label: 'Option 2', value: 2 },
                             { label: 'Option 3', value: 3 },
                           ]}
-                          selected={field.value}
+                          value={field.value}
                           onChange={(selected: number[]) => {
                             field.value = selected
                           }}
@@ -431,7 +431,7 @@ export default function StrategyEditForm() {
                               { label: 'Option 2', value: 2 },
                               { label: 'Option 3', value: 3 },
                             ]}
-                            selected={field.value}
+                            value={field.value}
                             onChange={field.onChange}
                           />
                         </FormControl>
@@ -509,7 +509,7 @@ export default function StrategyEditForm() {
                         { label: 'Option 2', value: 2 },
                         { label: 'Option 3', value: 3 },
                       ]}
-                      selected={field.value}
+                      value={field.value}
                       onChange={field.onChange}
                     />
                   </FormControl>

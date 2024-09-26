@@ -1,5 +1,5 @@
-import { DictType } from '../enum'
-import { EnumItem, PaginationReply, PaginationReq, Status } from '../global'
+import { DictType, Status } from '../enum'
+import { EnumItem, PaginationReply, PaginationReq } from '../global'
 import { DictItem, SelectItem } from '../model-types'
 import request from '../request'
 
@@ -8,7 +8,9 @@ import request from '../request'
  * @param params 创建字典请求参数
  * @returns 创建字典响应
  */
-export function createDict(params: CreateDictRequest): Promise<CreateDictReply> {
+export function createDict(
+  params: CreateDictRequest
+): Promise<CreateDictReply> {
   return request.POST<CreateDictReply>('/v1/dict/create', params)
 }
 
@@ -17,8 +19,13 @@ export function createDict(params: CreateDictRequest): Promise<CreateDictReply> 
  * @param params 更新字典请求参数
  * @returns 更新字典响应
  */
-export function updateDict(params: UpdateDictRequest): Promise<UpdateDictReply> {
-  return request.PUT<UpdateDictReply>(`/v1/dict/update/${params.id}`, params.data)
+export function updateDict(
+  params: UpdateDictRequest
+): Promise<UpdateDictReply> {
+  return request.PUT<UpdateDictReply>(
+    `/v1/dict/update/${params.id}`,
+    params.data
+  )
 }
 
 /**
@@ -35,7 +42,9 @@ export function listDict(params: ListDictRequest): Promise<ListDictReply> {
  * @param params 批量修改字典状态请求参数
  * @returns 批量修改字典状态响应
  */
-export function batchUpdateDictStatus(params: BatchUpdateDictStatusRequest): Promise<BatchUpdateDictStatusReply> {
+export function batchUpdateDictStatus(
+  params: BatchUpdateDictStatusRequest
+): Promise<BatchUpdateDictStatusReply> {
   return request.PUT<BatchUpdateDictStatusReply>('/v1/dict/status', params)
 }
 
@@ -44,7 +53,9 @@ export function batchUpdateDictStatus(params: BatchUpdateDictStatusRequest): Pro
  * @param params 删除字典请求参数
  * @returns 删除字典响应
  */
-export function deleteDict(params: DeleteDictRequest): Promise<DeleteDictReply> {
+export function deleteDict(
+  params: DeleteDictRequest
+): Promise<DeleteDictReply> {
   return request.DELETE<DeleteDictReply>(`/v1/dict/delete/${params.id}`)
 }
 
@@ -62,7 +73,9 @@ export function getDict(params: GetDictRequest): Promise<GetDictReply> {
  * @param params 获取字典类型列表请求参数
  * @returns 获取字典类型列表响应
  */
-export function listDictType(params: ListDictTypeRequest): Promise<ListDictTypeReply> {
+export function listDictType(
+  params: ListDictTypeRequest
+): Promise<ListDictTypeReply> {
   return request.POST<ListDictTypeReply>('/v1/dict/type/list', params)
 }
 
@@ -71,7 +84,9 @@ export function listDictType(params: ListDictTypeRequest): Promise<ListDictTypeR
  * @param params 获取字典下拉列表请求参数
  * @returns 获取字典下拉列表响应
  */
-export function dictSelectList(params: ListDictRequest): Promise<DictSelectListReply> {
+export function dictSelectList(
+  params: ListDictRequest
+): Promise<DictSelectListReply> {
   return request.POST<DictSelectListReply>('/v1/dict/select/list', params)
 }
 
@@ -100,7 +115,7 @@ export interface CreateDictReply {}
 
 export interface ListDictRequest {
   pagination: PaginationReq
-  keyword: string
+  keyword?: string
   status?: Status
   dictType?: DictType
   languageCode?: string

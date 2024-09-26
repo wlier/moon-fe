@@ -49,6 +49,7 @@ import {
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { toast } from 'sonner'
+import { Status } from '@/api/enum'
 
 let timer: NodeJS.Timeout | null = null
 export function ComboboxTeam() {
@@ -75,7 +76,27 @@ export function ComboboxTeam() {
     }
     timer = setTimeout(() => {
       myTeam().then((res) => {
-        setTeams(res.list)
+        setTeams(res?.list || [])
+        if (res?.list?.length > 0) {
+          if (!teamDetail) {
+            setTeamDetail(res.list[0])
+            localStorage.setItem('team', JSON.stringify(res.list[0]))
+          } else {
+            // 判断teamDetail是否在teams中
+            if (
+              !res.list
+                .filter((item) => item.status === Status.StatusEnable)
+                .some((item) => item.id === teamDetail?.id)
+            ) {
+              setTeamDetail(res.list[0])
+              localStorage.setItem('team', JSON.stringify(res.list[0]))
+            }
+          }
+        } else {
+          setTeamDetail(undefined)
+          localStorage.removeItem('team')
+          createTeamContext?.setOpen?.(true)
+        }
       })
     }, 500)
   }
@@ -92,7 +113,9 @@ export function ComboboxTeam() {
   }
 
   useEffect(() => {
-    handleRefreshToken()
+    if (teams.length > 0) {
+      handleRefreshToken()
+    }
   }, [teamDetail])
 
   useEffect(() => {
@@ -235,7 +258,6 @@ export function CreateTeamModalProvider({ children }: CreateTeamModalProps) {
   })
 
   const handleCreateTean = (value: CreateTeamFormValuesType) => {
-    console.log(value)
     createTeam(value).then(() => {
       toast.success(value.name + '创建成功')
       setOpen(false)

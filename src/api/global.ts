@@ -1,5 +1,13 @@
-import { BadgeProps } from 'antd'
-import { Condition, DatasourceType, Gender, MetricType, Role, Status, StorageType, SustainType } from './enum'
+import {
+  Condition,
+  DatasourceType,
+  Gender,
+  MetricType,
+  Role,
+  Status,
+  StorageType,
+  SustainType,
+} from './enum'
 
 export interface PaginationReq {
   pageNum: number
@@ -38,32 +46,32 @@ export interface EnumItem {
   label: string
 }
 
-export const StatusData: Record<Status, BadgeProps> = {
+export const StatusData: Record<Status, { color: string; text: string }> = {
   [Status.StatusAll]: {
     color: 'blue',
-    text: '全部'
+    text: '全部',
   },
   [Status.StatusEnable]: {
     color: 'green',
-    text: '启用'
+    text: '启用',
   },
   [Status.StatusDisable]: {
     color: 'red',
-    text: '禁用'
-  }
+    text: '禁用',
+  },
 }
 
 export const GenderData: Record<Gender, string> = {
   [Gender.GenderAll]: '全部',
   [Gender.GenderMale]: '男',
-  [Gender.GenderFemale]: '女'
+  [Gender.GenderFemale]: '女',
 }
 
 export const RoleData: Record<Role, string> = {
   [Role.RoleAll]: '全部',
   [Role.RoleSupperAdmin]: '超级管理员',
   [Role.RoleAdmin]: '管理员',
-  [Role.RoleUser]: '普通用户'
+  [Role.RoleUser]: '普通用户',
 }
 
 export type TagItemType = {
@@ -74,37 +82,37 @@ export type TagItemType = {
 export const MetricTypeData: Record<MetricType, TagItemType> = {
   [MetricType.MetricTypeUnknown]: {
     text: '全部',
-    color: ''
+    color: '',
   },
   [MetricType.MetricTypeCounter]: {
     text: 'Counter',
-    color: 'green'
+    color: 'green',
   },
   [MetricType.MetricTypeGauge]: {
     text: 'Gauge',
-    color: 'blue'
+    color: 'blue',
   },
   [MetricType.MetricTypeHistogram]: {
     text: 'Histogram',
-    color: 'purple'
+    color: 'purple',
   },
   [MetricType.MetricTypeSummary]: {
     text: 'Summary',
-    color: 'orange'
-  }
+    color: 'orange',
+  },
 }
 
 export const DataSourceTypeData: Record<DatasourceType, string> = {
   [DatasourceType.DatasourceTypeUnknown]: '全部',
   [DatasourceType.DatasourceTypeMetric]: 'Metric',
   [DatasourceType.DatasourceTypeLog]: 'Log',
-  [DatasourceType.DatasourceTypeTrace]: 'Trace'
+  [DatasourceType.DatasourceTypeTrace]: 'Trace',
 }
 
 export const StorageTypeData: Record<StorageType, string> = {
   [StorageType.StorageTypeUnknown]: '全部',
   [StorageType.StorageTypePrometheus]: 'Prometheus',
-  [StorageType.StorageTypeVictoriaMetrics]: 'VictoriaMetrics'
+  [StorageType.StorageTypeVictoriaMetrics]: 'VictoriaMetrics',
 }
 
 export const ConditionData: Record<Condition, string> = {
@@ -114,14 +122,14 @@ export const ConditionData: Record<Condition, string> = {
   [Condition.ConditionGT]: '大于(>)',
   [Condition.ConditionGTE]: '大于等于(>=)',
   [Condition.ConditionLT]: '小于(<)',
-  [Condition.ConditionLTE]: '小于等于(<=)'
+  [Condition.ConditionLTE]: '小于等于(<=)',
 }
 
 export const SustainTypeData: Record<SustainType, string> = {
   [SustainType.SustainTypeUnknown]: 'm时间内出现n次',
   [SustainType.SustainTypeFor]: 'm时间内出现n次',
   [SustainType.SustainTypeMax]: 'm时间内最多出现n次',
-  [SustainType.SustainTypeMin]: 'm时间内最少出现n次'
+  [SustainType.SustainTypeMin]: 'm时间内最少出现n次',
 }
 
 // 操作
@@ -137,5 +145,19 @@ export enum ActionKey {
   /** 禁用 */
   DISABLE = '__disable__',
   /** 操作日志 */
-  OPERATION_LOG = '__operation_log__'
+  OPERATION_LOG = '__operation_log__',
+  /** 开启 */
+  OPEN = '__open__',
+  /** 关闭 */
+  CLOSE = '__close__',
+  /** 订阅 */
+  SUBSCRIBE = '__subscribe__',
+  /** 取消订阅 */
+  UNSUBSCRIBE = '__unsubscribe__',
+  /** 订阅列表 */
+  SUBSCRIBER_LIST = '__subscriber_list__',
+  /** 订阅策略 */
+  SUBSCRIBER_STRATEGY = '__subscriber_strategy__',
+  /** 策略列表 */
+  STRATEGY_LIST = '__strategy_list__',
 }

@@ -58,6 +58,10 @@ export default function Pagination({
     setPages(newPages)
   }, [total, page, pageSize])
 
+  if (total <= 0) {
+    return null
+  }
+
   return (
     <div className='flex items-center justify-end gap-2 p-1'>
       <div className='flex items-center space-x-2'>

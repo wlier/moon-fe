@@ -1,4 +1,4 @@
-import { isLogin } from '@/api/request'
+import { isLogin, setToken } from '@/api/request'
 import { Logo } from '@/assets/logo'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -14,19 +14,20 @@ import {
   SunMoon,
 } from 'lucide-react'
 import React, { Suspense, useEffect, useState } from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { BreadcrumbMenu } from '../breadcrumb-menu'
 import { ComboboxTeam } from '../combobox-team'
 import { CommandDialogSearch } from '../command-dialog-search'
-import { Github, GlobeIcon } from '../icon'
 import { useLocale } from '../locale-provider'
 import { useTheme } from '../theme-provider'
 import { UserMenu } from '../user-menu'
+import { MoonGithub } from '../moon-github'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
+let timer: NodeJS.Timeout | null = null
 export function MoonLayout({ children }: LayoutProps) {
   const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -39,6 +40,27 @@ export function MoonLayout({ children }: LayoutProps) {
   const locale = useLocale()
   const i18n = useI18nConfig()
   const location = useLocation()
+
+  const search = window.location.search
+  const authToken = new URLSearchParams(search).get('token')
+
+  useEffect(() => {
+    if (authToken) {
+      setToken(authToken)
+      // 清除search
+      window.location.search = ''
+      return
+    }
+  }, [authToken])
+
+  if (!isLogin() && !authToken) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      navigate('/login')
+    }, 1000)
+  }
 
   useEffect(() => {
     const pathname = location.pathname
@@ -55,10 +77,6 @@ export function MoonLayout({ children }: LayoutProps) {
     setSelectKeys([...parentKeys, pathname])
   }, [i18n, location.pathname])
 
-  if (!isLogin()) {
-    return <Navigate to='/login' />
-  }
-
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
   const toggleMenuItem = (title: string) => {
     setExpandedItems((prev) => ({ ...prev, [title]: !prev[title] }))
@@ -66,7 +84,6 @@ export function MoonLayout({ children }: LayoutProps) {
 
   return (
     <div className='flex flex-col min-h-screen overflow-hidden'>
-      {/* Header */}
       <header className='sticky top-0 z-40 bg-background border-b'>
         <div className='container flex h-16 items-center justify-between py-4'>
           <div className='flex items-center gap-2'>
@@ -86,16 +103,14 @@ export function MoonLayout({ children }: LayoutProps) {
             <Button variant='ghost'>
               <CommandDialogSearch />
             </Button>
-            <Button variant='ghost'>
-              <Github />
-            </Button>
+            <MoonGithub />
             <Button
               variant='ghost'
               onClick={() =>
                 locale.setLocale(locale.locale === 'zh-CN' ? 'en-US' : 'zh-CN')
               }
             >
-              <GlobeIcon className='h-5 w-5 mr-2' />
+              {/* <GlobeIcon className='h-5 w-5 mr-2' /> */}
               {i18n.Login.locale[locale.locale]}
             </Button>
             <Button
@@ -191,7 +206,7 @@ export function MoonLayout({ children }: LayoutProps) {
               )}
               <span className='sr-only'>Toggle sidebar</span>
             </Button>
-            <BreadcrumbMenu className='pt-1 pb-1' />
+            <BreadcrumbMenu className='pt-1 pb-1' menus={menus(i18n)} />
           </div>
 
           <div
@@ -206,20 +221,20 @@ export function MoonLayout({ children }: LayoutProps) {
       <footer className='bg-background border-t py-4'>
         <div className='container flex items-center justify-between'>
           <p className='text-sm text-muted-foreground'>
-            © 2023 My App. All rights reserved.
+            {i18n.Layout.footer.copyright} {i18n.Layout.footer.rights}
           </p>
           <nav className='flex gap-4'>
             <a
               href='#'
               className='text-sm text-muted-foreground hover:underline'
             >
-              Privacy Policy
+              {i18n.Layout.footer.privacyPolicy}
             </a>
             <a
               href='#'
               className='text-sm text-muted-foreground hover:underline'
             >
-              Terms of Service
+              {i18n.Layout.footer.termsService}
             </a>
           </nav>
         </div>

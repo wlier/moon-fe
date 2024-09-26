@@ -31,8 +31,8 @@ const zhCNI18n = {
       },
     },
     locale: {
-      'en-US': '英文',
-      'zh-CN': '中文',
+      'en-US': '中文',
+      'zh-CN': 'English',
     },
     mode: {
       dark: '深色模式',
@@ -41,6 +41,13 @@ const zhCNI18n = {
     },
   },
   Layout: {
+    footer: {
+      copyright: '© 2023 Moon 监控系统。',
+      rights: '保留所有权利。',
+      version: '版本',
+      privacyPolicy: '隐私策略',
+      termsService: '服务条款',
+    },
     menu: {
       monitor: '实时监控',
       monitorDashboard: '数据大盘',
@@ -95,6 +102,42 @@ const zhCNI18n = {
           },
           label: '团队描述',
           placeholder: '请输入团队描述',
+        },
+      },
+    },
+    strategy: {
+      group: {
+        edit: {
+          create: '创建策略组',
+          edit: '编辑策略组',
+          delete: '删除策略组',
+          cancel: '取消',
+          confirm: '确定',
+          form: {
+            name: {
+              error: {
+                required: '策略组名称不能为空',
+                max: '策略组名称不能超过20个字符',
+              },
+              label: '策略组名称',
+              placeholder: '请输入策略组名称',
+            },
+            remark: {
+              error: {
+                required: '策略组描述不能为空',
+                max: '策略组描述不能超过255个字符',
+              },
+              label: '策略组描述',
+              placeholder: '请输入策略组描述',
+            },
+            categoriesIds: {
+              error: {
+                required: '策略组分类不能为空',
+              },
+              label: '策略组分类',
+              placeholder: '请选择策略组分类',
+            },
+          },
         },
       },
     },
