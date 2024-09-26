@@ -20,6 +20,7 @@ export default function StrategyGroup() {
     useState<boolean>(false)
   const [openDetailModal, setOpenDetailModal] = useState<boolean>(false)
   const [detail, setDetail] = useState<StrategyGroupItem>()
+
   const [searchListParams, setSearchListParams] =
     useState<ListStrategyGroupRequest>({
       pagination: {
