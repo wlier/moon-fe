@@ -1,6 +1,6 @@
 import { PageLock } from '@/components/icon'
 import { lazy } from 'react'
-import { RouteObject } from 'react-router-dom'
+import { Navigate, RouteObject } from 'react-router-dom'
 
 export const routes: RouteObject[] = [
   {
@@ -51,6 +51,11 @@ export const routes: RouteObject[] = [
         ),
       },
     ],
+  },
+  {
+    path: '/',
+    // 重定向/home
+    element: <Navigate to='/monitor/dashboard' replace={true} />,
   },
   {
     path: '/login',

@@ -31,8 +31,8 @@ const zhCNI18n = {
       },
     },
     locale: {
-      'en-US': '英文',
-      'zh-CN': '中文',
+      'en-US': '中文',
+      'zh-CN': 'English',
     },
     mode: {
       dark: '深色模式',
@@ -41,6 +41,13 @@ const zhCNI18n = {
     },
   },
   Layout: {
+    footer: {
+      copyright: '© 2023 Moon 监控系统。',
+      rights: '保留所有权利。',
+      version: '版本',
+      privacyPolicy: '隐私策略',
+      termsService: '服务条款',
+    },
     menu: {
       monitor: '实时监控',
       monitorDashboard: '数据大盘',

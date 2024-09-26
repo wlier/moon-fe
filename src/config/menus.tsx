@@ -1,3 +1,10 @@
+import {
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 import { I18nLocaleType } from '@/locale'
 import {
   Bell,
@@ -160,4 +167,42 @@ export const menus = (i18n: I18nLocaleType): MenuItem[] => {
       ],
     },
   ]
+}
+
+export const menusToBreadcrumbMap = (
+  menuItems: MenuItem[]
+): Record<string, JSX.Element> => {
+  const breadcrumbMap: Record<string, JSX.Element> = {}
+
+  const buildBreadcrumb = (items: MenuItem[], path: MenuItem[] = []): void => {
+    items.forEach((item) => {
+      const newPath = [...path, item]
+      if (item.children) {
+        buildBreadcrumb(item.children, newPath)
+      } else {
+        breadcrumbMap[item.key] = (
+          <BreadcrumbList key={newPath.map((item) => item.key).join('/')}>
+            {newPath.map((label, index) => (
+              <>
+                {index > 0 && <BreadcrumbSeparator key={label.key + index} />}
+                <BreadcrumbItem key={label.key + index}>
+                  {index === newPath.length - 1 ? (
+                    <BreadcrumbPage>{label.label}</BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink href={`/#${item.key}`}>
+                      {label.label}
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+              </>
+            ))}
+          </BreadcrumbList>
+        )
+      }
+    })
+  }
+
+  buildBreadcrumb(menuItems)
+
+  return breadcrumbMap
 }

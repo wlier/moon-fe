@@ -33,8 +33,8 @@ const enUSI18n: I18nLocaleType = {
       },
     },
     locale: {
-      'en-US': 'English',
-      'zh-CN': 'Chinese',
+      'en-US': '中文',
+      'zh-CN': 'English',
     },
     mode: {
       dark: 'Dark Mode',
@@ -43,6 +43,13 @@ const enUSI18n: I18nLocaleType = {
     },
   },
   Layout: {
+    footer: {
+      copyright: '© 2023 Moon monitor.',
+      rights: 'All rights reserved.',
+      version: 'version',
+      privacyPolicy: 'Privacy Policy',
+      termsService: 'Terms of Service',
+    },
     menu: {
       monitor: 'Monitor',
       monitorDashboard: 'Dashboard',

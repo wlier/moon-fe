@@ -18,6 +18,8 @@ export const hostMap: { [key: string]: string } = {
   [localhost5173]: 'http://192.168.10.2:8000',
 }
 
+export const baseURL = hostMap[host] || host
+
 const request = axios.create({
   baseURL: hostMap[host] || host,
   timeout: 10000,
