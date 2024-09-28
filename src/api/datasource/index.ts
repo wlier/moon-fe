@@ -8,7 +8,9 @@ import request from '../request'
  * @param params 创建数据源请求参数
  * @returns 创建数据源响应
  */
-export function createDatasource(params: CreateDatasourceRequest): Promise<CreateDatasourceReply> {
+export function createDatasource(
+  params: CreateDatasourceRequest
+): Promise<CreateDatasourceReply> {
   return request.POST<CreateDatasourceReply>('/v1/datasource', params)
 }
 
@@ -17,8 +19,13 @@ export function createDatasource(params: CreateDatasourceRequest): Promise<Creat
  * @param params 更新数据源请求参数
  * @returns 更新数据源响应
  */
-export function updateDatasource(params: UpdateDatasourceRequest): Promise<UpdateDatasourceReply> {
-  return request.PUT<UpdateDatasourceReply>(`/v1/datasource/${params.id}`, params)
+export function updateDatasource(
+  params: UpdateDatasourceRequest
+): Promise<UpdateDatasourceReply> {
+  return request.PUT<UpdateDatasourceReply>(
+    `/v1/datasource/${params.id}`,
+    params
+  )
 }
 
 /**
@@ -26,7 +33,9 @@ export function updateDatasource(params: UpdateDatasourceRequest): Promise<Updat
  * @param params 删除数据源请求参数
  * @returns 删除数据源响应
  */
-export function deleteDatasource(params: DeleteDatasourceRequest): Promise<DeleteDatasourceReply> {
+export function deleteDatasource(
+  params: DeleteDatasourceRequest
+): Promise<DeleteDatasourceReply> {
   return request.DELETE<DeleteDatasourceReply>(`/v1/datasource/${params.id}`)
 }
 
@@ -35,7 +44,9 @@ export function deleteDatasource(params: DeleteDatasourceRequest): Promise<Delet
  * @param params 获取数据源详情请求参数
  * @returns 获取数据源详情响应
  */
-export function getDatasource(params: GetDatasourceRequest): Promise<GetDatasourceReply> {
+export function getDatasource(
+  params: GetDatasourceRequest
+): Promise<GetDatasourceReply> {
   return request.GET<GetDatasourceReply>(`/v1/datasource/${params.id}`)
 }
 
@@ -44,7 +55,9 @@ export function getDatasource(params: GetDatasourceRequest): Promise<GetDatasour
  * @param params 获取数据源列表请求参数
  * @returns 获取数据源列表响应
  */
-export function listDatasource(params: ListDatasourceRequest): Promise<ListDatasourceReply> {
+export function listDatasource(
+  params: ListDatasourceRequest
+): Promise<ListDatasourceReply> {
   return request.POST<ListDatasourceReply>('/v1/datasource/list', params)
 }
 
@@ -53,8 +66,13 @@ export function listDatasource(params: ListDatasourceRequest): Promise<ListDatas
  * @param params 更新数据源状态请求参数
  * @returns 更新数据源状态响应
  */
-export function updateDatasourceStatus(params: UpdateDatasourceStatusRequest): Promise<UpdateDatasourceStatusReply> {
-  return request.PUT<UpdateDatasourceStatusReply>(`/v1/datasource/${params.id}/status`, params)
+export function updateDatasourceStatus(
+  params: UpdateDatasourceStatusRequest
+): Promise<UpdateDatasourceStatusReply> {
+  return request.PUT<UpdateDatasourceStatusReply>(
+    `/v1/datasource/${params.id}/status`,
+    params
+  )
 }
 
 /**
@@ -62,7 +80,9 @@ export function updateDatasourceStatus(params: UpdateDatasourceStatusRequest): P
  * @param params 获取数据源下拉列表请求参数
  * @returns 获取数据源下拉列表响应
  */
-export function getDatasourceSelect(params: ListDatasourceRequest): Promise<GetDatasourceSelectReply> {
+export function getDatasourceSelect(
+  params: ListDatasourceRequest
+): Promise<GetDatasourceSelectReply> {
   return request.POST<GetDatasourceSelectReply>('/v1/datasource/select', params)
 }
 
@@ -71,8 +91,13 @@ export function getDatasourceSelect(params: ListDatasourceRequest): Promise<GetD
  * @param params 同步数据源元数据请求参数
  * @returns 同步数据源元数据响应
  */
-export function syncDatasourceMeta(params: SyncDatasourceMetaRequest): Promise<SyncDatasourceMetaReply> {
-  return request.POST<SyncDatasourceMetaReply>(`/v1/datasource/${params.id}/sync`, {})
+export function syncDatasourceMeta(
+  params: SyncDatasourceMetaRequest
+): Promise<SyncDatasourceMetaReply> {
+  return request.POST<SyncDatasourceMetaReply>(
+    `/v1/datasource/${params.id}/sync`,
+    {}
+  )
 }
 
 /**
@@ -80,8 +105,13 @@ export function syncDatasourceMeta(params: SyncDatasourceMetaRequest): Promise<S
  * @param params 获取数据请求参数
  * @returns 获取数据响应
  */
-export function datasourceQuery(params: DatasourceQueryRequest): Promise<DatasourceQueryReply> {
-  return request.POST<DatasourceQueryReply>(`/v1/datasource/${params.id}/query`, params)
+export function datasourceQuery(
+  params: DatasourceQueryRequest
+): Promise<DatasourceQueryReply> {
+  return request.POST<DatasourceQueryReply>(
+    `/v1/datasource/${params.id}/query`,
+    params
+  )
 }
 
 // 以下类型定义应基于实际的 proto 文件生成，此处仅为示例
@@ -117,7 +147,7 @@ export interface GetDatasourceRequest {
 }
 
 export interface GetDatasourceReply {
-  data: DatasourceItem
+  detail: DatasourceItem
 }
 
 export interface ListDatasourceRequest {

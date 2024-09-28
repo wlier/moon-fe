@@ -8,6 +8,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from '@/components/ui/command'
 import {
   Popover,
@@ -38,7 +39,7 @@ export function SearchableSelect({
   value: propValue,
   onChange,
   placeholder = 'Select option...',
-  options,
+  options = [],
 }: SearchableSelectProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState(propValue)
@@ -89,14 +90,35 @@ export function SearchableSelect({
           aria-expanded={open}
           className='w-[100%] justify-between'
         >
-          {mode === 'single' &&
-            (value !== undefined ? (
-              loadedOptions.find((option) => option.value === value)?.label
-            ) : (
-              <span className='text-muted-foreground'>{placeholder}</span>
-            ))}
-          {mode === 'multiple' && Array.isArray(value) && value?.length > 0 ? (
-            `${value.length} selected`
+          {Array.isArray(value) && value?.length > 0 ? (
+            <div className='flex flex-wrap gap-1 mt-2 justify-center items-center'>
+              {Array.isArray(value) &&
+                value?.map((item) => (
+                  <Badge key={item} variant='secondary' className='text-sm'>
+                    {
+                      loadedOptions.find((option) => option.value === item)
+                        ?.label
+                    }
+                    <button
+                      className='ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          handleValueChange(value.filter((v) => v !== item))
+                        }
+                      }}
+                      onMouseDown={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                      }}
+                      onClick={() =>
+                        handleValueChange(value.filter((v) => v !== item))
+                      }
+                    >
+                      ✕
+                    </button>
+                  </Badge>
+                ))}
+            </div>
           ) : (
             <span className='text-muted-foreground'>{placeholder}</span>
           )}
@@ -114,64 +136,40 @@ export function SearchableSelect({
           </CommandEmpty>
           {loadedOptions && (
             <CommandGroup>
-              {loadedOptions?.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  onSelect={() => {
-                    if (Array.isArray(value)) {
-                      handleValueChange(
-                        value?.includes(option.value)
-                          ? value.filter((v) => v !== option.value)
-                          : [...value, option.value]
-                      )
-                      return
-                    }
-                    handleValueChange([option.value])
-                    setOpen(false)
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      Array.isArray(value) && value.includes(option.value)
-                        ? 'opacity-100'
-                        : 'opacity-0'
-                    )}
-                  />
-                  {option.label}
-                </CommandItem>
-              ))}
+              <CommandList>
+                {loadedOptions?.map((option) => (
+                  <CommandItem
+                    key={option.value}
+                    onSelect={() => {
+                      if (Array.isArray(value) && mode === 'multiple') {
+                        handleValueChange(
+                          value?.includes(option.value)
+                            ? value.filter((v) => v !== option.value)
+                            : [...value, option.value]
+                        )
+                        return
+                      }
+                      handleValueChange(option.value)
+                      setOpen(false)
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        Array.isArray(value) && value.includes(option.value)
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      )}
+                    />
+                    {option.label}
+                  </CommandItem>
+                ))}
+              </CommandList>
             </CommandGroup>
           )}
         </Command>
       </PopoverContent>
-      {mode === 'multiple' && (
-        <div className='flex flex-wrap gap-1 mt-2'>
-          {Array.isArray(value) &&
-            value?.map((item) => (
-              <Badge key={item} variant='secondary' className='text-sm'>
-                {loadedOptions.find((option) => option.value === item)?.label}
-                <button
-                  className='ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleValueChange(value.filter((v) => v !== item))
-                    }
-                  }}
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                  }}
-                  onClick={() =>
-                    handleValueChange(value.filter((v) => v !== item))
-                  }
-                >
-                  ✕
-                </button>
-              </Badge>
-            ))}
-        </div>
-      )}
+
       {name && (
         <input
           type='hidden'

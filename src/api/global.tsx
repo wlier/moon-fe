@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import {
   Condition,
   DatasourceType,
@@ -8,6 +9,7 @@ import {
   StorageType,
   SustainType,
 } from './enum'
+import { Promethues, VictoriaMetrics } from '@/components/icon'
 
 export interface PaginationReq {
   pageNum: number
@@ -113,6 +115,20 @@ export const StorageTypeData: Record<StorageType, string> = {
   [StorageType.StorageTypeUnknown]: '全部',
   [StorageType.StorageTypePrometheus]: 'Prometheus',
   [StorageType.StorageTypeVictoriaMetrics]: 'VictoriaMetrics',
+}
+
+export const StorageTypeIcon: Record<StorageType, React.ReactNode> = {
+  [StorageType.StorageTypePrometheus]: (
+    <Button variant='secondary' size='icon'>
+      <Promethues />
+    </Button>
+  ),
+  [StorageType.StorageTypeVictoriaMetrics]: (
+    <Button variant='secondary' size='icon'>
+      <VictoriaMetrics />
+    </Button>
+  ),
+  [StorageType.StorageTypeUnknown]: undefined,
 }
 
 export const ConditionData: Record<Condition, string> = {

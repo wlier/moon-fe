@@ -88,14 +88,14 @@ export function AutoTable(props: AutoTableProps<any>) {
           <Table
             className={cn(
               className,
-              scroll && 'overflow-x-auto',
+              scroll?.x && 'overflow-x-auto',
               'min-h-[200px]'
             )}
           >
             <TableHeader
               className={cn(
                 'sticky top-0 bg-background z-20',
-                scroll && 'overflow-x-auto'
+                scroll?.x && 'overflow-x-auto'
               )}
             >
               <TableRow>
@@ -130,6 +130,7 @@ export function AutoTable(props: AutoTableProps<any>) {
             </TableHeader>
             <TableBody
               className={cn(scroll && 'overflow-x-auto', 'min-h-[200px]')}
+              style={{ height: scroll?.y }}
             >
               {loading ? (
                 <Loading size='large' />
