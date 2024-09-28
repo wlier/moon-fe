@@ -23,7 +23,7 @@ export type ColumnItem<T extends object> = {
   ellipsis?: boolean
   fixed?: 'left' | 'right'
   align?: 'left' | 'center' | 'right'
-  render?: (value: any, item: T, index: number) => React.ReactNode
+  render?: (item: T, index: number) => React.ReactNode
 }
 
 export interface AutoTableProps<T extends object> {
@@ -156,7 +156,7 @@ export function AutoTable(props: AutoTableProps<any>) {
                         )}
                       >
                         {column.render
-                          ? column.render(item[column.dataIndex], item, index)
+                          ? column.render(item, index)
                           : item[column.dataIndex]}
                       </TableCell>
                     ))}

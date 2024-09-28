@@ -138,7 +138,7 @@ export default function EmailVerification() {
   }
 
   return (
-    <div className='max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md'>
+    <div className='max-w-md mx-auto mt-10 p-6 bg-background rounded-lg shadow-md'>
       <h1 className='text-2xl font-bold mb-6 text-center'>绑定邮箱</h1>
 
       {error && step === 1 && (
@@ -211,13 +211,14 @@ export default function EmailVerification() {
                         }`}
                       />
                       <div
-                        className='flex-shrink-0 cursor-pointer'
+                        className='flex-shrink-0 rounded-md bg-slate-200 cursor-pointer'
                         onClick={generateCaptcha}
                       >
                         <img
                           src={captcha?.captcha}
                           alt='验证码'
                           className='h-10'
+                          style={{ aspectRatio: '80/28', objectFit: 'cover' }}
                         />
                       </div>
                     </div>

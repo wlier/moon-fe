@@ -1,3 +1,4 @@
+import { listDatasource } from '@/api/datasource'
 import { dictSelectList } from '@/api/dict'
 import {
   Condition,
@@ -7,11 +8,17 @@ import {
   SustainType,
 } from '@/api/enum'
 import {
+  ConditionData,
+  DataSourceTypeData,
+  SustainTypeData,
+} from '@/api/global'
+import {
   AlarmNoticeGroupItem,
   DatasourceItem,
   StrategyGroupItem,
 } from '@/api/model-types'
 import { createStrategy, listStrategyGroup } from '@/api/strategy'
+import { DynamicKeyValueInput } from '@/components/dynamic-key-value-input'
 import { MultiSelect } from '@/components/multi-select'
 import { Option, SearchableSelect } from '@/components/select'
 import {
@@ -35,23 +42,16 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 import { useI18nConfig } from '@/locale'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { PlusCircle, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { cn } from '@/lib/utils'
-import {
-  ConditionData,
-  DataSourceTypeData,
-  SustainTypeData,
-} from '@/api/global'
-import { DynamicKeyValueInput } from '@/components/dynamic-key-value-input'
-import { listDatasource } from '@/api/datasource'
 
 export interface EditStrategyModalProps {
   id?: number
@@ -514,7 +514,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className='flex items-center space-x-2 gap-1'>
-                              {edit.form.annotations.summery.label}
+                              {edit.form.annotations.summary.label}
                               <FormMessage />
                             </FormLabel>
                             <FormControl>
@@ -522,7 +522,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
                                 {...field}
                                 autoComplete='off'
                                 placeholder={
-                                  edit.form.annotations.summery.placeholder
+                                  edit.form.annotations.summary.placeholder
                                 }
                               />
                             </FormControl>
@@ -858,9 +858,7 @@ export function EditStrategyModal(props: EditStrategyModalProps) {
             </div>
 
             <AlertDialogFooter
-              className={cn(
-                'fixed bottom-0 left-0 right-0 p-4'
-              )}
+              className={cn('fixed bottom-0 left-0 right-0 p-4')}
             >
               <div className='h-[1px] bg-gray-200 dark:bg-gray-700' />
               <AlertDialogCancel type='reset' onClick={handleCancel}>
