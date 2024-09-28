@@ -6,6 +6,7 @@ import { Gitee, Github, GlobeIcon } from '@/components/icon'
 import { useLocale } from '@/components/locale-provider'
 import { MoonGithub } from '@/components/moon-github'
 import { useTheme } from '@/components/theme-provider'
+import { Tooltip } from '@/components/tooltip'
 import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-with-collision'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -20,6 +21,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { hashMd5 } from '@/lib/hash'
+import { cn } from '@/lib/utils'
 import { useI18nConfig } from '@/locale'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Moon, SunMoon } from 'lucide-react'
@@ -156,6 +158,7 @@ export default function Login() {
                     <FormLabel className='flex items-center space-x-2 gap-1'>
                       <div className='text-red-500'>*</div>
                       {i18n.Login.form.username}
+                      <Tooltip className={cn('ml-2', 'text-sm')} />
                       <FormMessage />
                     </FormLabel>
                     <FormControl>

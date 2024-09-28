@@ -1,14 +1,14 @@
+import { Status } from '@/api/enum'
+import { ActionKey } from '@/api/global'
 import { StrategyGroupItem } from '@/api/model-types'
 import { listStrategyGroup, ListStrategyGroupRequest } from '@/api/strategy'
 import { AutoTable, ColumnItem } from '@/components/auto-table'
+import { MoreMenu } from '@/components/more-menu'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { Plus, RefreshCcw, Upload } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { EditStrategyGroupModal } from './edit-strategy-group-modal'
-import { Status } from '@/api/enum'
-import { MoreMenu } from '@/components/more-menu'
-import { ActionKey } from '@/api/global'
-import { cn } from '@/lib/utils'
 import StrategyGroupDetailModal from './strategy-group-detail'
 
 let timer: NodeJS.Timeout | null = null
@@ -44,7 +44,7 @@ export default function StrategyGroup() {
       key: 'categories',
       label: '策略类型',
       dataIndex: 'categories',
-      render: (_, record) => (
+      render: (record) => (
         <span className='text-primary'>
           {record.categories.map((item) => item.name).join('，')}
         </span>
@@ -54,7 +54,7 @@ export default function StrategyGroup() {
       key: 'status',
       label: '状态',
       dataIndex: 'status',
-      render: (_, record) =>
+      render: (record) =>
         record.status === Status.StatusEnable ? (
           <span className='text-primary'>启用</span>
         ) : (
@@ -70,7 +70,7 @@ export default function StrategyGroup() {
       key: 'strategyCount',
       label: '策略数量',
       dataIndex: 'strategyCount',
-      render: (_, record) => (
+      render: (record) => (
         <span className='text-primary'>{record.strategyCount}</span>
       ),
     },

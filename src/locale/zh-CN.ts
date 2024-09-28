@@ -195,10 +195,10 @@ const zhCNI18n = {
             step: {
               error: {
                 required: '采样率不能为空',
-                min: '采样率不能小于1',
-                max: '采样率不能大于100',
+                min: '查询采样率不能小于1s',
+                max: '采样率不能大于100s',
               },
-              label: '采样率',
+              label: '采样率(秒)',
               placeholder: '请输入采样率',
             },
             expr: {
@@ -228,7 +228,7 @@ const zhCNI18n = {
               placeholder: '请输入注解',
               add: '添加注解',
               addRemark: '在这里输入键值对',
-              summery: {
+              summary: {
                 label: '告警摘要',
                 placeholder: '请输入告警摘要',
                 error: {
@@ -281,7 +281,7 @@ const zhCNI18n = {
                 error: {
                   required: '持续时长不能为空',
                 },
-                label: '持续时长',
+                label: '持续时长(秒)',
                 placeholder: '请输入持续时长（秒）',
               },
               count: {

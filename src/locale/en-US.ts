@@ -142,6 +142,175 @@ const enUSI18n: I18nLocaleType = {
           },
         },
       },
+      list: {
+        edit: {
+          create: 'Create Strategy',
+          edit: 'Edit Strategy',
+          delete: 'Delete Strategy',
+          cancel: 'Cancel',
+          confirm: 'Confirm',
+          form: {
+            name: {
+              error: {
+                required: 'Strategy name cannot be empty',
+                max: 'Strategy name cannot exceed 20 characters',
+              },
+              label: 'Strategy name',
+              placeholder: 'Please enter the strategy name',
+            },
+            groupId: {
+              error: {
+                required: 'Strategy group cannot be empty',
+              },
+              label: 'Strategy Group',
+              placeholder: 'Please select the strategy group',
+            },
+            sourceType: {
+              error: {
+                required: 'Datasource type cannot be empty',
+              },
+              label: 'Datasource type',
+              placeholder: 'Please select the datasource type',
+            },
+            remark: {
+              error: {
+                required: 'Remark cannot be empty',
+                max: 'Remark cannot exceed 255 characters',
+              },
+              label: 'Remark',
+              placeholder: 'Please enter the remark',
+            },
+            categoriesIds: {
+              error: {
+                required: 'Strategy classification cannot be empty',
+              },
+              label: 'Classification',
+              placeholder: 'Please select the strategy classification',
+            },
+            datasourceIds: {
+              error: {
+                required: 'Datasource cannot be empty',
+              },
+              label: 'Datasource',
+              placeholder: 'Please select the datasource',
+            },
+            step: {
+              error: {
+                required: 'Query step cannot be empty',
+                min: 'Query step must be greater than or equal to 1 seconds',
+                max: 'Query step must be less than or equal to 100 seconds',
+              },
+              label: 'Step(s)',
+              placeholder: 'Please enter the query step',
+            },
+            expr: {
+              error: {
+                required: 'Query expression cannot be empty',
+              },
+              label: 'Expr',
+              placeholder: 'Please enter the query expression',
+            },
+            alarmGroupIds: {
+              error: {
+                required: 'alarm notice group cannot be empty',
+              },
+              label: 'Alarm Notice Group',
+              placeholder: 'Please select the alarm notice group',
+            },
+            labels: {
+              error: {},
+              label: 'Labels',
+              placeholder: 'Please enter the labels',
+              add: 'Add label',
+              addRemark: 'Click to add',
+            },
+            annotations: {
+              error: {},
+              label: 'Annotations',
+              placeholder: 'Please enter the annotations',
+              add: 'Add annotation',
+              addRemark: 'Click to add',
+              summary: {
+                label: 'Summery',
+                placeholder: 'Please enter the summary',
+                error: {
+                  required: 'Summary cannot be empty',
+                },
+              },
+              description: {
+                label: 'Description',
+                placeholder: 'Please enter the description',
+                error: {
+                  required: 'Description cannot be empty',
+                },
+              },
+            },
+            strategyLevel: {
+              add: 'Add Strategy Level',
+              error: {
+                required: 'Strategy level cannot be empty',
+              },
+              label: 'Strategy Level',
+              levelId: {
+                error: {
+                  required: 'Strategy level cannot be empty',
+                },
+                label: 'Level',
+                placeholder: 'Please select the strategy level',
+              },
+              condition: {
+                error: {
+                  required: 'Condition cannot be empty',
+                },
+                label: 'Condition',
+                placeholder: 'Please select the condition',
+              },
+              threshold: {
+                error: {
+                  required: 'Threshold cannot be empty',
+                },
+                label: 'Threshold',
+                placeholder: 'Please enter the threshold',
+              },
+              sustainType: {
+                error: {
+                  required: 'Sustain type cannot be empty',
+                },
+                label: 'Sustain type',
+                placeholder: 'Please select the sustain type',
+              },
+              duration: {
+                error: {
+                  required: 'Duration cannot be empty',
+                },
+                label: 'Duration(s)',
+                placeholder: 'Please enter the duration',
+              },
+              count: {
+                error: {
+                  required: 'Count cannot be empty',
+                },
+                label: 'Count',
+                placeholder: 'Please enter the count',
+              },
+              alarmGroupIds: {
+                error: {
+                  required: 'Alarm notice group cannot be empty',
+                },
+                label: 'Notice Group',
+                placeholder: 'Please select the alarm notice group',
+              },
+              labelNotices: {
+                error: {},
+                label: 'Label Notices',
+                placeholder: 'Please enter the label notices',
+                add: 'Add label notice',
+                addRemark: 'Click to add',
+              },
+            },
+          },
+        },
+      },
     },
   },
   AutoTable: {
