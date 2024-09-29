@@ -19,6 +19,7 @@ import { BreadcrumbMenu } from '../breadcrumb-menu'
 import { ComboboxTeam } from '../combobox-team'
 import { CommandDialogSearch } from '../command-dialog-search'
 import { useLocale } from '../locale-provider'
+import MessageDropdown from '../message-dropdown'
 import { MoonGithub } from '../moon-github'
 import { useTheme } from '../theme-provider'
 import { UserMenu } from '../user-menu'
@@ -122,6 +123,7 @@ export function MoonLayout({ children }: LayoutProps) {
             >
               {theme.theme === 'dark' ? <Moon /> : <SunMoon />}
             </Button>
+            <MessageDropdown />
             <UserMenu />
           </nav>
         </div>
