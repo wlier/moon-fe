@@ -149,6 +149,14 @@ export const menus = (i18n: I18nLocaleType): MenuItem[] => {
           label: '系统菜单',
           key: '/system/menu',
         },
+        {
+          label: '团队角色',
+          key: '/system/role',
+        },
+        {
+          label: '团队成员',
+          key: '/system/member',
+        },
       ],
     },
     {

@@ -289,7 +289,7 @@ export default function Login() {
               >
                 {i18n.Login.form.registerLink}
               </a>
-              , 或使用以下方式登录
+              {i18n.Login.form.loginOther}
             </p>
             <div className='flex justify-between space-x-4'>
               <Button
