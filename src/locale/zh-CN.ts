@@ -16,6 +16,7 @@ const zhCNI18n = {
       registerFooter: '已有账户？',
       loginFooter: '没有账户？',
       registerLink: '去注册',
+      loginOther: ', 或使用以下方式登录',
       loginLink: '去登录',
       rememberMe: '记住账号密码',
       captchaPlaceholder: '请输入验证码',

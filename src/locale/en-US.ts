@@ -18,6 +18,7 @@ const enUSI18n: I18nLocaleType = {
       registerFooter: 'Have an account?',
       loginFooter: "Don't have an account? ",
       registerLink: 'to register',
+      loginOther: ', or log in using the following',
       loginLink: 'to login',
       rememberMe: 'Remember me',
       captchaPlaceholder: 'Please enter the captcha',

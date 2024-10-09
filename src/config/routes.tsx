@@ -43,6 +43,15 @@ export const routes: RouteObject[] = [
         ],
       },
       {
+        path: '/system',
+        children: [
+          {
+            path: '/system/role',
+            Component: lazy(() => import('@/pages/system/role')),
+          },
+        ],
+      },
+      {
         path: '*',
         element: (
           <div className='flex justify-center items-center'>
